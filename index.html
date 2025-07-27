@@ -1,207 +1,205 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8" />
-<title>Malla Curricular Derecho UCV</title>
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<!-- Google Fonts -->
-<link href="https://fonts.googleapis.com/css?family=League+Spartan:700&display=swap" rel="stylesheet" />
-<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet" />
-<style>
-  body {
-    margin: 0;
-    background: #114087;
-    color: #222;
-    min-height: 100vh;
-    font-family: 'Montserrat', Arial, sans-serif;
-    overflow-x: auto;
-  }
-  h1 {
-    font-family: 'League Spartan', Arial, sans-serif;
-    text-align: center;
-    color: #fff;
-    font-size: 2.5em;
-    margin: 32px 0 20px 0;
-    letter-spacing: 2px;
-    user-select: none;
-    line-height: 1.2;
-  }
-  /* Contenedor principal con flex fila y altura igual */
-  .main-container {
-    display: flex;
-    justify-content: center;
-    gap: 30px;
-    max-width: 1280px;
-    margin: 0 auto 35px auto;
-    padding: 0 10px;
-    flex-wrap: wrap;
-    align-items: stretch; /* Clave para igualar altura de columnas */
-  }
-  /* Columnas verticales apilando dos bloques */
-  .vertical-column {
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-    min-width: 250px;
-    max-width: 300px;
-    flex: 1 1 250px;
-    box-sizing: border-box;
-    align-items: stretch;
-  }
-  /* Bloques de contenido */
-  .column-block {
-    background: #FFBD59;
-    border-radius: 17px;
-    padding: 23px 17px 20px 17px;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.09);
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    flex-shrink: 0;
-  }
-  /* Hacen crecer para alinear altura: primer, tercer (bloques superiores) y quinto año (bloque inferior) */
-  #primer-ano-block,
-  #tercer-ano-block,
-  #quinto-ano-block {
-    flex-grow: 1;
-    min-height: 100px; /* Estabilidad visual */
-  }
-  /* Bloques inferiores sin flex-grow para tamaño natural */
-  #cuarto-ano-block,
-  #especiales-block {
-    flex-grow: 0;
-  }
-  .col-title {
-    font-family: 'Montserrat', Arial, sans-serif;
-    font-weight: 700;
-    text-align: center;
-    font-size: 1.21em;
-    margin-bottom: 15px;
-    color: #114087;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    user-select: none;
-  }
-  button.asignatura, button.especial-btn {
-    font-size: 1em;
-    padding: 14px 13px;
-    border: none;
-    border-radius: 12px;
-    background: #fff;
-    margin-bottom: 14px;
-    color: #114087;
-    font-family: inherit;
-    font-weight: 500;
-    text-align: left;
-    cursor: pointer;
-    box-shadow: 0 1.5px 6px rgba(18, 39, 124, 0.08);
-    transition: background 0.18s, color 0.18s;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: relative;
-    outline: none;
-    user-select: none;
-  }
-  button.asignatura[aria-disabled="true"], button.especial-btn[aria-disabled="true"] {
-    cursor: not-allowed;
-    background: #d1d1d151;
-    color: #5871a0;
-    opacity: 0.72;
-  }
-  button.asignatura.aprobada, button.especial-btn.aprobada {
-    background: #114087 !important;
-    color: white;
-    text-decoration: line-through;
-    font-weight: 700;
-  }
-  .uc-label, .especial-uc-label {
-    font-size: 0.93em;
-    padding-left: 7px;
-    color: #114087b8;
-    font-weight: 400;
-    opacity: 0.82;
-    flex-shrink: 0;
-    user-select: none;
-  }
-  .tooltip {
-    visibility: hidden;
-    width: 240px;
-    background-color: #222c44e2;
-    color: #fff;
-    text-align: left;
-    border-radius: 8px;
-    padding: 8px 13px;
-    position: absolute;
-    z-index: 9;
-    left: 50%;
-    bottom: 123%;
-    transform: translateX(-50%);
-    opacity: 0;
-    transition: opacity 0.22s;
-    font-size: 0.95em;
-    font-family: 'Montserrat', Arial, sans-serif;
-    pointer-events: none;
-    user-select: none;
-  }
-  button.asignatura[aria-disabled="true"]:hover .tooltip,
-  button.especial-btn[aria-disabled="true"]:hover .tooltip {
-    visibility: visible;
-    opacity: 1;
-    pointer-events: auto;
-  }
-  .info-col {
-    background: #fff;
-    border-radius: 12px;
-    color: #114087;
-    font-family: 'Montserrat', Arial, sans-serif;
-    font-weight: 500;
-    font-size: 1em;
-    padding: 16px 11px;
-    box-shadow: 0 1.5px 6px #12277c18;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    white-space: normal;
-    user-select: none;
-    line-height: 1.5;
-    min-height: 66px;
-  }
-  .info-col p {
-    margin-top: 0;
-    margin-bottom: 0;
-    line-height: 1.4;
-  }
-  @media (max-width: 900px) {
+  <meta charset="UTF-8" />
+  <title>Malla Curricular Derecho UCV</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=League+Spartan:700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      margin: 0;
+      background: #114087;
+      color: #222;
+      min-height: 100vh;
+      font-family: 'Montserrat', Arial, sans-serif;
+      overflow-x: auto;
+    }
+    h1 {
+      font-family: 'League Spartan', Arial, sans-serif;
+      text-align: center;
+      color: #fff;
+      font-size: 2.5em;
+      margin: 32px 0 20px 0;
+      letter-spacing: 2px;
+      user-select: none;
+      line-height: 1.2;
+    }
     .main-container {
-      flex-direction: column;
-      align-items: center;
+      display: flex;
+      justify-content: center;
       gap: 30px;
+      max-width: 1280px;
+      margin: 0 auto 35px auto;
+      padding: 0 10px;
+      flex-wrap: wrap;
+      align-items: stretch; /* Mantiene columnas alineadas */
     }
     .vertical-column {
-      width: 100% !important;
-      max-width: none !important;
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      min-width: 250px;
+      max-width: 300px;
+      flex: 1 1 250px;
+      box-sizing: border-box;
+      align-items: stretch;
     }
-  }
-  .footer {
-    color: #fff;
-    text-align: center;
-    font-size: 0.98em;
-    margin: 80px 0 20px 0; /* Espacio abajo */
-    opacity: 0.89;
-    max-width: 680px;
-    margin-left: auto;
-    margin-right: auto;
-    line-height: 1.35;
-    user-select: none;
-  }
-</style>
+    .column-block {
+      background: #FFBD59;
+      border-radius: 17px;
+      padding: 23px 17px 20px 17px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.09);
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      flex-shrink: 0;
+    }
+    /* Solo QUINTO AÑO y TERCER AÑO bloques crecen para alineación */
+    #quinto-ano-block,
+    #tercer-ano-block {
+      flex-grow: 1;
+      min-height: 100px;
+    }
+    /* Casillas especiales y otros NO crecen, tamaño natural */
+    #especiales-block,
+    #cuarto-ano-block {
+      flex-grow: 0;
+    }
+    /* Opcional: estabilidad visual */
+    #segundo-ano-block {
+      min-height: 0;
+    }
+    .col-title {
+      font-family: 'Montserrat', Arial, sans-serif;
+      font-weight: 700;
+      text-align: center;
+      font-size: 1.21em;
+      margin-bottom: 15px;
+      color: #114087;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      user-select: none;
+    }
+    button.asignatura, button.especial-btn {
+      font-size: 1em;
+      padding: 14px 13px;
+      border: none;
+      border-radius: 12px;
+      background: #fff;
+      margin-bottom: 14px;
+      color: #114087;
+      font-family: inherit;
+      font-weight: 500;
+      text-align: left;
+      cursor: pointer;
+      box-shadow: 0 1.5px 6px rgba(18, 39, 124, 0.08);
+      transition: background 0.18s, color 0.18s;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      outline: none;
+      user-select: none;
+    }
+    button.asignatura[aria-disabled="true"], button.especial-btn[aria-disabled="true"] {
+      cursor: not-allowed;
+      background: #d1d1d151;
+      color: #5871a0;
+      opacity: 0.72;
+    }
+    button.asignatura.aprobada, button.especial-btn.aprobada {
+      background: #114087 !important;
+      color: white;
+      text-decoration: line-through;
+      font-weight: 700;
+    }
+    .uc-label, .especial-uc-label {
+      font-size: 0.93em;
+      padding-left: 7px;
+      color: #114087b8;
+      font-weight: 400;
+      opacity: 0.82;
+      flex-shrink: 0;
+      user-select: none;
+    }
+    .tooltip {
+      visibility: hidden;
+      width: 240px;
+      background-color: #222c44e2;
+      color: #fff;
+      text-align: left;
+      border-radius: 8px;
+      padding: 8px 13px;
+      position: absolute;
+      z-index: 9;
+      left: 50%;
+      bottom: 123%;
+      transform: translateX(-50%);
+      opacity: 0;
+      transition: opacity 0.22s;
+      font-size: 0.95em;
+      font-family: 'Montserrat', Arial, sans-serif;
+      pointer-events: none;
+      user-select: none;
+    }
+    button.asignatura[aria-disabled="true"]:hover .tooltip, button.especial-btn[aria-disabled="true"]:hover .tooltip {
+      visibility: visible;
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .info-col {
+      background: #fff;
+      border-radius: 12px;
+      color: #114087;
+      font-family: 'Montserrat', Arial, sans-serif;
+      font-weight: 500;
+      font-size: 1em;
+      padding: 16px 11px;
+      box-shadow: 0 1.5px 6px #12277c18;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      white-space: normal;
+      user-select: none;
+      line-height: 1.5;
+      min-height: 66px;
+    }
+    .info-col p {
+      margin-top: 0;
+      margin-bottom: 0;
+      line-height: 1.4;
+    }
+    @media (max-width: 900px) {
+      .main-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+      }
+      .vertical-column {
+        width: 100% !important;
+        max-width: none !important;
+      }
+    }
+    .footer {
+      color: #fff;
+      text-align: center;
+      font-size: 0.98em;
+      margin: 80px 0 20px 0;
+      opacity: 0.89;
+      max-width: 680px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.35;
+      user-select: none;
+    }
+  </style>
 </head>
 <body>
   <h1 title="Haz Shift + doble clic para limpiar el progreso">
     Malla Curricular - Derecho<br>Universidad Central de Venezuela
   </h1>
-
   <div class="main-container" id="main-container">
     <div class="vertical-column" id="col-1">
       <div class="column-block" id="primer-ano-block"></div>
@@ -216,12 +214,12 @@
       <div class="column-block" id="especiales-block"></div>
     </div>
   </div>
-
   <div class="footer">
-    yoongissi te amo
+    taehyung te amo
   </div>
-
   <script>
+    // ... (el mismo código JavaScript de interacción de tus versiones anteriores)
+    // El código JS queda exactamente igual que el de la versión anterior y garantiza funcionamiento.
     const MALLA = [
       { year: "Primer año", materias: [
         { id: "1101", nombre: "Derecho Civil I", uc: 6 },
