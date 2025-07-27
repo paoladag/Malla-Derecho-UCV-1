@@ -210,6 +210,12 @@
       line-height: 1.5;
       min-height: 66px;
     }
+    /* Aquí eliminamos espacios en párrafos dentro de info-col */
+    .info-col p {
+      margin-top: 0;
+      margin-bottom: 0;
+      line-height: 1.4;
+    }
     @media (max-width: 900px) {
       .main-container {
         flex-direction: column;
@@ -267,12 +273,12 @@
   <script>
     const MALLA = [
       { year: "Primer año", materias: [
-        { id: "1101", nombre: "Derecho Civil I", uc: 6},
-        { id: "1201", nombre: "Derecho Constitucional", uc: 6},
-        { id: "1501", nombre: "Introducción al Derecho", uc: 6},
-        { id: "1502", nombre: "Derecho Romano I", uc: 6},
-        { id: "1601", nombre: "Economía Política", uc: 6},
-        { id: "1602", nombre: "Sociología Jurídica", uc: 6},
+        { id: "1101", nombre: "Derecho Civil I", uc: 6 },
+        { id: "1201", nombre: "Derecho Constitucional", uc: 6 },
+        { id: "1501", nombre: "Introducción al Derecho", uc: 6 },
+        { id: "1502", nombre: "Derecho Romano I", uc: 6 },
+        { id: "1601", nombre: "Economía Política", uc: 6 },
+        { id: "1602", nombre: "Sociología Jurídica", uc: 6 },
       ]},
       { year: "Segundo año", materias: [
         { id: "1102", nombre: "Derecho Civil II", uc: 6, deps: ["1101", "1501"] },
@@ -288,7 +294,7 @@
         { id: "1205", nombre: "Finanzas Públicas", uc: 6, deps: ["1202", "1601"] },
         { id: "1302", nombre: "Derecho Penal II", uc: 6, deps: ["1301"] },
         { id: "1504", nombre: "Filosofía del Derecho", uc: 6 },
-        { id: "1902", nombre: "Práctica Jurídica I", uc: 6, deps: ["1101", "1501"]}
+        { id: "1902", nombre: "Práctica Jurídica I", uc: 6, deps: ["1101", "1501"] }
       ]},
       { year: "Cuarto año", materias: [
         { id: "1104", nombre: "Derecho Civil IV", uc: 6, deps: ["1102"] },
@@ -322,9 +328,11 @@
         return [];
       }
     }
+
     function guardarAprobadas(aprobadas) {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(aprobadas));
     }
+
     function getMateriaPorId(id) {
       for (let bloque of MALLA) {
         let encontrada = bloque.materias.find(mat => mat.id === id);
@@ -333,10 +341,12 @@
       if (id === "SC") return ESPECIALES.find(esp => esp.id === id) || null;
       return null;
     }
+
     function requisitosNoAprobados(materia, aprobadas) {
       if (!materia.deps) return [];
       return (materia.deps || []).filter(reqId => !aprobadas.includes(reqId));
     }
+
     function calcCreditosAprobados(aprobadas) {
       let total = 0;
       for (let bloque of MALLA) {
@@ -456,11 +466,11 @@
         especialesBlock.appendChild(crearBotonEspecial(especial));
       });
 
-      // Caja info adicional con negrita solo en palabras claves y texto distribuido uniformemente
+      // Caja info adicional con negrita solo en palabras clave y texto limpio
       const infoDiv = document.createElement("div");
       infoDiv.className = "info-col";
       infoDiv.innerHTML =
-        `<p>Para cursar <b>Seminario</b> o <b>Curso de Extensión</b>, deben haberse aprobado 72 créditos.</p>` +
+        `<p>Para cursar <b>Seminario o Curso de Extensión</b>, deben haberse aprobado 72 créditos.</p>` +
         `<p>Para realizar <b>Servicio Comunitario</b>, deben haberse aprobado 91 créditos.</p>`;
       especialesBlock.appendChild(infoDiv);
     }
