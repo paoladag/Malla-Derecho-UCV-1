@@ -34,7 +34,7 @@
       margin: 0 auto 35px auto;
       padding: 0 10px;
       flex-wrap: wrap;
-      align-items: stretch; /* Importante para igualar alturas */
+      align-items: stretch; /* columnas igualan altura */
     }
     .vertical-column {
       display: flex;
@@ -55,21 +55,22 @@
       flex-direction: column;
       align-items: stretch;
       flex-shrink: 0;
-      min-height: 100px;
+      /* Sin estiramiento para bloques inferiores */
+      flex-grow: 0;
     }
-    /* Bloques superiores crecen para igualar altura */
+    /* Bloques superiores de primer, segundo y tercer año se estiran para igualar altura */
     #primer-ano-block,
     #segundo-ano-block,
     #tercer-ano-block {
       flex-grow: 1;
+      min-height: 100px;
     }
-    /* Bloques inferiores, opcional flex-grow para igualar o natural */
+    /* Bloques inferiores sin crecimiento para alinear arriba natural */
     #cuarto-ano-block,
     #quinto-ano-block,
     #especiales-block {
-      flex-grow: 1;
+      flex-grow: 0;
     }
-    /* Estilos de texto y botón (iguales que antes) */
     .col-title {
       font-family: 'Montserrat', Arial, sans-serif;
       font-weight: 700;
