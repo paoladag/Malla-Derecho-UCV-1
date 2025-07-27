@@ -34,7 +34,7 @@
       margin: 0 auto 35px auto;
       padding: 0 10px;
       flex-wrap: wrap;
-      align-items: stretch; /* Alinea verticalmente columnas */
+      align-items: stretch; /* Clave para alinear altura total */
     }
     .vertical-column {
       display: flex;
@@ -56,14 +56,14 @@
       align-items: stretch;
       flex-shrink: 0;
     }
-    /* Solo Primer Año, Tercer Año y Quinto Año crecen para igualar altura */
+    /* Solo crecen para igualar altura: bloques primer año, tercer año y quinto año */
     #primer-ano-block,
     #tercer-ano-block,
     #quinto-ano-block {
       flex-grow: 1;
       min-height: 100px;
     }
-    /* Cuarto Año y Casillas especiales sin flex-grow, tamaño natural */
+    /* No crecen, mantienen tamaño natural: bloques cuarto año y casillas especiales */
     #cuarto-ano-block,
     #especiales-block {
       flex-grow: 0;
@@ -183,7 +183,7 @@
       color: #fff;
       text-align: center;
       font-size: 0.98em;
-      margin: 80px 0 20px 0; /* Espacio extra arriba para separarlo */
+      margin: 80px 0 20px 0;
       opacity: 0.89;
       max-width: 680px;
       margin-left: auto;
@@ -212,7 +212,7 @@
     </div>
   </div>
   <div class="footer">
-    yoongi te amo
+    yoongissi te amo
   </div>
   <script>
     const MALLA = [
@@ -257,11 +257,14 @@
         { id: "1904", nombre: "Práctica Jurídica III", uc: 6, deps: ["1401", "1903"] }
       ]}
     ];
+
     const ESPECIALES = [
       { id: "1905", nombre: "Seminario / Curso de Extensión", uc: 2, necesitaCreditos: 72 },
       { id: "SC", nombre: "Servicio Comunitario", uc: 0, necesitaCreditos: 91 }
     ];
+
     const STORAGE_KEY = "der_ucv_aprobadas_v2";
+
     function obtenerAprobadas() {
       try {
         return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
@@ -269,38 +272,43 @@
         return [];
       }
     }
+
     function guardarAprobadas(aprobadas) {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(aprobadas));
     }
+
     function getMateriaPorId(id) {
-      for (let bloque of MALLA) {
-        let encontrada = bloque.materias.find(mat => mat.id === id);
+      for (const bloque of MALLA) {
+        const encontrada = bloque.materias.find(mat => mat.id === id);
         if (encontrada) return encontrada;
       }
       if (id === "SC") return ESPECIALES.find(esp => esp.id === id) || null;
       return null;
     }
+
     function requisitosNoAprobados(materia, aprobadas) {
       if (!materia.deps) return [];
       return (materia.deps || []).filter(reqId => !aprobadas.includes(reqId));
     }
+
     function calcCreditosAprobados(aprobadas) {
       let total = 0;
-      for (let bloque of MALLA) {
-        for (let mat of bloque.materias) {
+      for (const bloque of MALLA) {
+        for (const mat of bloque.materias) {
           if (aprobadas.includes(mat.id) && mat.uc) total += mat.uc;
         }
       }
-      for (let esp of ESPECIALES) {
+      for (const esp of ESPECIALES) {
         if (aprobadas.includes(esp.id) && esp.uc) total += esp.uc;
       }
       return total;
     }
+
     function crearBotonMateria(materia) {
       const aprobadas = obtenerAprobadas();
-      let reqsNoAprob = requisitosNoAprobados(materia, aprobadas);
-      let bloqueada = reqsNoAprob.length > 0;
-      let btn = document.createElement("button");
+      const reqsNoAprob = requisitosNoAprobados(materia, aprobadas);
+      const bloqueada = reqsNoAprob.length > 0;
+      const btn = document.createElement("button");
       btn.className = "asignatura";
       btn.setAttribute("data-id", materia.id);
       btn.tabIndex = 0;
@@ -314,13 +322,12 @@
       if (bloqueada) {
         btn.setAttribute("aria-disabled", "true");
         btn.tabIndex = -1;
-        let tooltip = document.createElement("span");
+        const tooltip = document.createElement("span");
         tooltip.className = "tooltip";
-        let textosFaltan = reqsNoAprob.map(id => {
-          let mat = getMateriaPorId(id);
-          return mat ? mat.nombre : id;
-        });
-        tooltip.textContent = `Debes aprobar primero: ${textosFaltan.join(", ")}`;
+        tooltip.textContent = `Debes aprobar primero: ${reqsNoAprob.map(id => {
+          const m = getMateriaPorId(id);
+          return m ? m.nombre : id;
+        }).join(", ")}`;
         btn.appendChild(tooltip);
       } else {
         btn.removeAttribute("aria-disabled");
@@ -328,6 +335,7 @@
       }
       return btn;
     }
+
     function crearBotonEspecial(especial) {
       const aprobadas = obtenerAprobadas();
       const totalCredAprob = calcCreditosAprobados(aprobadas);
@@ -363,6 +371,7 @@
       }
       return btn;
     }
+
     function renderMalla() {
       document.getElementById('primer-ano-block').innerHTML = '';
       document.getElementById('segundo-ano-block').innerHTML = '';
@@ -398,6 +407,7 @@
         `<p>Para realizar <b>Servicio Comunitario</b>, deben haberse aprobado 91 créditos.</p>`;
       especialesBlock.appendChild(infoDiv);
     }
+
     function toggleAprobada(matId) {
       let aprobadas = obtenerAprobadas();
       if (aprobadas.includes(matId)) {
@@ -408,6 +418,7 @@
       guardarAprobadas(aprobadas);
       renderMalla();
     }
+
     window.addEventListener("DOMContentLoaded", renderMalla);
     document.querySelector("h1").ondblclick = function(e){
       if(e.shiftKey){
