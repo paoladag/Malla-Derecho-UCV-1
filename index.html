@@ -34,15 +34,15 @@
       margin: 0 auto 35px auto;
       padding: 0 10px;
       flex-wrap: wrap;
-      align-items: stretch; /* Estira columnas a la misma altura */
+      align-items: stretch; /* Clave para igualar altura columnas */
     }
     .vertical-column {
       display: flex;
       flex-direction: column;
       gap: 30px;
       min-width: 250px;
-      flex: 1 1 250px;
       max-width: 300px;
+      flex: 1 1 250px;
       box-sizing: border-box;
       align-items: stretch;
     }
@@ -55,19 +55,8 @@
       flex-direction: column;
       align-items: stretch;
       flex-shrink: 0;
-    }
-    /* Bloques inferiores con flex-grow para estirarse y forzar la altura */
-    #cuarto-ano-block,
-    #quinto-ano-block,
-    #especiales-block {
-      flex-grow: 1;
-      min-height: 100px;
-    }
-    /* Bloques superiores sin flex-grow, se adaptan al contenido */
-    #primer-ano-block,
-    #segundo-ano-block,
-    #tercer-ano-block {
-      flex-grow: 0;
+      flex-grow: 1; /* Bloques crecen para igualar alturas */
+      min-height: 100px; /* Para mayor estabilidad visual */
     }
     .col-title {
       font-family: 'Montserrat', Arial, sans-serif;
@@ -196,7 +185,9 @@
   </style>
 </head>
 <body>
-  <h1 title="Haz Shift + doble clic para limpiar el progreso">Malla Curricular - Derecho<br>Universidad Central de Venezuela</h1>
+  <h1 title="Haz Shift + doble clic para limpiar el progreso">
+    Malla Curricular - Derecho<br>Universidad Central de Venezuela
+  </h1>
 
   <div class="main-container" id="main-container">
     <div class="vertical-column" id="col-1">
