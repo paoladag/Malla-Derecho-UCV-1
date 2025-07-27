@@ -34,13 +34,13 @@
       max-width: 1280px;
       margin: 0 auto 35px auto;
       padding: 0 10px;
-      flex-wrap: wrap; /* para responsive */
+      flex-wrap: wrap; /* responsive */
     }
     /* Cada columna será un flex vertical con dos filas apiladas */
     .vertical-column {
       display: flex;
       flex-direction: column;
-      gap: 30px; /* espacio vertical entre los dos bloques en cada columna */
+      gap: 30px; /* espacio vertical entre bloques en columna */
       min-width: 250px;
       flex: 1 1 250px;
       max-width: 300px;
@@ -55,7 +55,7 @@
       display: flex;
       flex-direction: column;
       align-items: stretch;
-      min-height: 150px; /* para altura mínima visual */
+      min-height: 150px;
     }
     .col-title {
       font-family: 'Montserrat', Arial, sans-serif;
@@ -135,26 +135,29 @@
       opacity: 1;
       pointer-events: auto;
     }
-    /* Botones especiales */
+    /* Casillas especiales con estilo igual a materias */
     button.especial-btn {
-      background: #fff;
+      font-size: 1em;
+      padding: 14px 13px;
+      border: none;
       border-radius: 12px;
+      background: #fff;
+      margin-bottom: 14px;
       color: #114087;
       font-family: inherit;
-      font-weight: 700;
-      font-size: 1em;
-      padding: 16px 11px;
-      margin-bottom: 14px;
-      box-shadow: 0px 1.5px 6px 0px #12277c18;
+      font-weight: 500; /* mismo que materias, sin negrita */
+      text-align: left;
       cursor: pointer;
-      outline: none;
-      border: none;
+      box-shadow: 0 1.5px 6px rgba(18, 39, 124, 0.08);
+      transition: background 0.18s, color 0.18s;
       display: flex;
-      align-items: center;
       justify-content: space-between;
+      align-items: center;
       position: relative;
-      transition: background 0.21s, color 0.18s;
+      outline: none;
       user-select: none;
+      min-width: 220px;
+      max-width: 100%;
     }
     button.especial-btn[aria-disabled="true"] {
       cursor: not-allowed;
@@ -166,6 +169,7 @@
       background: #114087 !important;
       color: #fff;
       text-decoration: line-through;
+    	font-weight: 700;
     }
     button.especial-btn .tooltip {
       bottom: 110%;
@@ -180,13 +184,23 @@
       opacity: 1;
       pointer-events: auto;
     }
-    /* Caja info adicional con fondo blanco y texto azul, similar a botones especiales */
+    /* Etiqueta pequeña para UC al lado derecho en casillas especiales */
+    .especial-uc-label {
+      font-size: 0.93em;
+      padding-left: 7px;
+      color: #114087b8;
+      font-weight: 400;
+      opacity: 0.82;
+      flex-shrink: 0;
+      user-select: none;
+    }
+    /* Caja info adicional con fondo blanco y texto azul, sin negrita salvo palabras claves */
     .info-col {
       background: #fff;
       border-radius: 12px;
       color: #114087;
       font-family: 'Montserrat', Arial, sans-serif;
-      font-weight: 700;
+      font-weight: 500; /* normal, no negrita */
       font-size: 1em;
       padding: 16px 11px;
       box-shadow: 0px 1.5px 6px 0px #12277c18;
@@ -196,7 +210,7 @@
       white-space: pre-line;
       user-select: none;
       line-height: 1.3;
-      min-height: 66px; /* para coherencia visual */
+      min-height: 66px;
     }
     @media (max-width: 900px) {
       .main-container {
@@ -334,7 +348,6 @@
       }
       return total;
     }
-
     function crearBotonMateria(materia) {
       const aprobadas = obtenerAprobadas();
       let reqsNoAprob = requisitosNoAprobados(materia, aprobadas);
@@ -367,9 +380,46 @@
       }
       return btn;
     }
+    function crearBotonEspecial(especial) {
+      const aprobadas = obtenerAprobadas();
+      const totalCredAprob = calcCreditosAprobados(aprobadas);
+      const bloqueada = totalCredAprob < especial.necesitaCreditos;
+      const btn = document.createElement("button");
+      btn.className = "especial-btn";
+      btn.setAttribute("data-id", especial.id);
 
+      const nombreSpan = document.createElement("span");
+      nombreSpan.textContent = especial.nombre;
+      btn.appendChild(nombreSpan);
+
+      if (especial.uc && especial.uc > 0) {
+        const ucSpan = document.createElement("span");
+        ucSpan.className = "especial-uc-label";
+        ucSpan.textContent = `${especial.uc} UC`;
+        btn.appendChild(ucSpan);
+      }
+
+      if (aprobadas.includes(especial.id)) {
+        btn.classList.add("aprobada");
+        btn.setAttribute("aria-pressed", "true");
+      } else {
+        btn.setAttribute("aria-pressed", "false");
+      }
+      if (bloqueada) {
+        btn.setAttribute("aria-disabled", "true");
+        btn.tabIndex = -1;
+        const tooltip = document.createElement("span");
+        tooltip.className = "tooltip";
+        tooltip.textContent = `Debes tener aprobados ${especial.necesitaCreditos} créditos.`;
+        btn.appendChild(tooltip);
+      } else {
+        btn.removeAttribute("aria-disabled");
+        btn.addEventListener("click", () => toggleAprobada(especial.id));
+      }
+      return btn;
+    }
     function renderMalla() {
-      // Vaciar todo
+      // Vaciar bloques
       document.getElementById('primer-ano-block').innerHTML = '';
       document.getElementById('segundo-ano-block').innerHTML = '';
       document.getElementById('tercer-ano-block').innerHTML = '';
@@ -377,81 +427,39 @@
       document.getElementById('quinto-ano-block').innerHTML = '';
       document.getElementById('especiales-block').innerHTML = '';
 
-      // Llenar primer, segundo, tercer año
+      // Agregar títulos y materias por año
       MALLA.forEach(bloque => {
-        if(bloque.year === "Primer año") {
-          bloque.materias.forEach(materia => {
-            document.getElementById('primer-ano-block').appendChild(crearBotonMateria(materia));
-          });
-          document.getElementById('primer-ano-block').insertAdjacentHTML('afterbegin', `<div class="col-title">${bloque.year}</div>`);
+        let containerId = '';
+        switch (bloque.year) {
+          case "Primer año": containerId = 'primer-ano-block'; break;
+          case "Segundo año": containerId = 'segundo-ano-block'; break;
+          case "Tercer año": containerId = 'tercer-ano-block'; break;
+          case "Cuarto año": containerId = 'cuarto-ano-block'; break;
+          case "Quinto año": containerId = 'quinto-ano-block'; break;
         }
-        else if(bloque.year === "Segundo año") {
+        if(containerId) {
+          const cont = document.getElementById(containerId);
+          cont.insertAdjacentHTML('beforeend', `<div class="col-title">${bloque.year}</div>`);
           bloque.materias.forEach(materia => {
-            document.getElementById('segundo-ano-block').appendChild(crearBotonMateria(materia));
+            cont.appendChild(crearBotonMateria(materia));
           });
-          document.getElementById('segundo-ano-block').insertAdjacentHTML('afterbegin', `<div class="col-title">${bloque.year}</div>`);
-        }
-        else if(bloque.year === "Tercer año") {
-          bloque.materias.forEach(materia => {
-            document.getElementById('tercer-ano-block').appendChild(crearBotonMateria(materia));
-          });
-          document.getElementById('tercer-ano-block').insertAdjacentHTML('afterbegin', `<div class="col-title">${bloque.year}</div>`);
-        }
-        else if(bloque.year === "Cuarto año") {
-          bloque.materias.forEach(materia => {
-            document.getElementById('cuarto-ano-block').appendChild(crearBotonMateria(materia));
-          });
-          document.getElementById('cuarto-ano-block').insertAdjacentHTML('afterbegin', `<div class="col-title">${bloque.year}</div>`);
-        }
-        else if(bloque.year === "Quinto año") {
-          bloque.materias.forEach(materia => {
-            document.getElementById('quinto-ano-block').appendChild(crearBotonMateria(materia));
-          });
-          document.getElementById('quinto-ano-block').insertAdjacentHTML('afterbegin', `<div class="col-title">${bloque.year}</div>`);
         }
       });
 
-      // Render especiales en columna 3 abajo
       const especialesBlock = document.getElementById('especiales-block');
-      const aprobadas = obtenerAprobadas();
-      const totalCredAprob = calcCreditosAprobados(aprobadas);
 
       ESPECIALES.forEach(especial => {
-        const bloqueada = totalCredAprob < especial.necesitaCreditos;
-        const btn = document.createElement("button");
-        btn.className = "especial-btn";
-        btn.innerHTML = `<span>${especial.nombre}${especial.uc ? ` (${especial.uc} UC)` : ''}</span>`;
-        btn.setAttribute("data-id", especial.id);
-
-        if (aprobadas.includes(especial.id)) {
-          btn.classList.add("aprobada");
-          btn.setAttribute("aria-pressed", "true");
-        } else {
-          btn.setAttribute("aria-pressed", "false");
-        }
-        if (bloqueada) {
-          btn.setAttribute("aria-disabled", "true");
-          btn.tabIndex = -1;
-          const tooltip = document.createElement("span");
-          tooltip.className = "tooltip";
-          tooltip.textContent = `Debes tener aprobados ${especial.necesitaCreditos} créditos.`;
-          btn.appendChild(tooltip);
-        } else {
-          btn.removeAttribute("aria-disabled");
-          btn.addEventListener("click", () => toggleAprobada(especial.id));
-        }
-        especialesBlock.appendChild(btn);
+        especialesBlock.appendChild(crearBotonEspecial(especial));
       });
 
-      // Caja info adicional
+      // Caja info adicional sin negrita excepto palabras claves
       const infoDiv = document.createElement("div");
       infoDiv.className = "info-col";
       infoDiv.innerHTML =
-        `Para cursar <b>Seminario o Curso de Extensión</b>, deben haberse aprobado 72 créditos.<br>` +
+        `Para cursar <b>Seminario</b> o Curso de Extensión, deben haberse aprobado 72 créditos.<br>` +
         `Para realizar <b>Servicio Comunitario</b>, deben haberse aprobado 91 créditos.`;
       especialesBlock.appendChild(infoDiv);
     }
-
     function toggleAprobada(matId) {
       let aprobadas = obtenerAprobadas();
       if (aprobadas.includes(matId)) {
@@ -463,7 +471,6 @@
       renderMalla();
     }
     window.addEventListener("DOMContentLoaded", renderMalla);
-    // Limpiar progreso con Shift + doble clic en el título
     document.querySelector("h1").ondblclick = function(e){
       if(e.shiftKey){
         if(confirm("¿Seguro que deseas borrar todo el progreso guardado?")){
