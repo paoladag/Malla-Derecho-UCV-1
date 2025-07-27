@@ -34,7 +34,7 @@
       margin: 0 auto 35px auto;
       padding: 0 10px;
       flex-wrap: wrap;
-      align-items: stretch; /* Clave para igualar altura columnas */
+      align-items: stretch; /* Importante para igualar alturas */
     }
     .vertical-column {
       display: flex;
@@ -55,9 +55,21 @@
       flex-direction: column;
       align-items: stretch;
       flex-shrink: 0;
-      flex-grow: 1; /* Bloques crecen para igualar alturas */
-      min-height: 100px; /* Para mayor estabilidad visual */
+      min-height: 100px;
     }
+    /* Bloques superiores crecen para igualar altura */
+    #primer-ano-block,
+    #segundo-ano-block,
+    #tercer-ano-block {
+      flex-grow: 1;
+    }
+    /* Bloques inferiores, opcional flex-grow para igualar o natural */
+    #cuarto-ano-block,
+    #quinto-ano-block,
+    #especiales-block {
+      flex-grow: 1;
+    }
+    /* Estilos de texto y botón (iguales que antes) */
     .col-title {
       font-family: 'Montserrat', Arial, sans-serif;
       font-weight: 700;
