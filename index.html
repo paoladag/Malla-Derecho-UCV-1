@@ -44,6 +44,7 @@
       flex: 1 1 250px;
       max-width: 300px;
       box-sizing: border-box;
+      align-items: stretch;
     }
     .column-block {
       background: #FFBD59;
@@ -53,7 +54,14 @@
       display: flex;
       flex-direction: column;
       align-items: stretch;
-      min-height: 150px;
+      flex-shrink: 0;
+    }
+    /* Que los bloques inferiores se estiren para igualar altura */
+    #cuarto-ano-block,
+    #quinto-ano-block,
+    #especiales-block {
+      flex-grow: 1;
+      min-height: 100px;
     }
     .col-title {
       font-family: 'Montserrat', Arial, sans-serif;
@@ -210,7 +218,7 @@
       line-height: 1.5;
       min-height: 66px;
     }
-    /* Aquí eliminamos espacios en párrafos dentro de info-col */
+    /* Quitar márgenes extra en párrafos de info */
     .info-col p {
       margin-top: 0;
       margin-bottom: 0;
@@ -433,7 +441,6 @@
     }
 
     function renderMalla() {
-      // Vaciar bloques
       document.getElementById('primer-ano-block').innerHTML = '';
       document.getElementById('segundo-ano-block').innerHTML = '';
       document.getElementById('tercer-ano-block').innerHTML = '';
@@ -441,7 +448,6 @@
       document.getElementById('quinto-ano-block').innerHTML = '';
       document.getElementById('especiales-block').innerHTML = '';
 
-      // Agregar títulos y materias por año
       MALLA.forEach(bloque => {
         let containerId = '';
         switch (bloque.year) {
@@ -466,7 +472,7 @@
         especialesBlock.appendChild(crearBotonEspecial(especial));
       });
 
-      // Caja info adicional con negrita solo en palabras clave y texto limpio
+      // Información adicional
       const infoDiv = document.createElement("div");
       infoDiv.className = "info-col";
       infoDiv.innerHTML =
