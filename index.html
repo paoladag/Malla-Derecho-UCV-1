@@ -192,7 +192,7 @@
       flex-shrink: 0;
       user-select: none;
     }
-    /* Caja info adicional con fondo blanco y texto azul, sin negrita salvo palabras claves */
+    /* Caja info adicional con fondo blanco y texto azul, con negrita sólo en palabras clave */
     .info-col {
       background: #fff;
       border-radius: 12px;
@@ -456,11 +456,12 @@
         especialesBlock.appendChild(crearBotonEspecial(especial));
       });
 
+      // Caja info adicional con negrita solo en palabras claves y texto distribuido uniformemente
       const infoDiv = document.createElement("div");
       infoDiv.className = "info-col";
       infoDiv.innerHTML =
-        `Para cursar <b>Seminario</b> o <b>Curso de Extensión</b>, deben haberse aprobado 72 créditos.<br>` +
-        `Para realizar <b>Servicio Comunitario</b>, deben haberse aprobado 91 créditos.`;
+        `<p>Para cursar <b>Seminario</b> o <b>Curso de Extensión</b>, deben haberse aprobado 72 créditos.</p>` +
+        `<p>Para realizar <b>Servicio Comunitario</b>, deben haberse aprobado 91 créditos.</p>`;
       especialesBlock.appendChild(infoDiv);
     }
 
