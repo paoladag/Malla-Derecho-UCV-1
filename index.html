@@ -30,23 +30,21 @@
     .main-container {
       display: flex;
       justify-content: center;
-      gap: 30px; /* espacio horizontal entre columnas */
+      gap: 30px;
       max-width: 1280px;
       margin: 0 auto 35px auto;
       padding: 0 10px;
-      flex-wrap: wrap; /* responsive */
+      flex-wrap: wrap;
     }
-    /* Cada columna será un flex vertical con dos filas apiladas */
     .vertical-column {
       display: flex;
       flex-direction: column;
-      gap: 30px; /* espacio vertical entre bloques en columna */
+      gap: 30px;
       min-width: 250px;
       flex: 1 1 250px;
       max-width: 300px;
       box-sizing: border-box;
     }
-    /* Cada bloque (fila vertical dentro de col) es un bloque amarillo con materias o casillas */
     .column-block {
       background: #FFBD59;
       border-radius: 17px;
@@ -145,7 +143,7 @@
       margin-bottom: 14px;
       color: #114087;
       font-family: inherit;
-      font-weight: 500; /* mismo que materias, sin negrita */
+      font-weight: 500;
       text-align: left;
       cursor: pointer;
       box-shadow: 0 1.5px 6px rgba(18, 39, 124, 0.08);
@@ -169,7 +167,7 @@
       background: #114087 !important;
       color: #fff;
       text-decoration: line-through;
-    	font-weight: 700;
+      font-weight: 700;
     }
     button.especial-btn .tooltip {
       bottom: 110%;
@@ -200,16 +198,16 @@
       border-radius: 12px;
       color: #114087;
       font-family: 'Montserrat', Arial, sans-serif;
-      font-weight: 500; /* normal, no negrita */
+      font-weight: 500;
       font-size: 1em;
       padding: 16px 11px;
       box-shadow: 0px 1.5px 6px 0px #12277c18;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      white-space: pre-line;
+      white-space: normal;
       user-select: none;
-      line-height: 1.3;
+      line-height: 1.5;
       min-height: 66px;
     }
     @media (max-width: 900px) {
@@ -309,11 +307,14 @@
         { id: "1904", nombre: "Práctica Jurídica III", uc: 6, deps: ["1401", "1903"] }
       ]}
     ];
+
     const ESPECIALES = [
       { id: "1905", nombre: "Seminario / Curso de Extensión", uc: 2, necesitaCreditos: 72 },
       { id: "SC", nombre: "Servicio Comunitario", uc: 0, necesitaCreditos: 91 }
     ];
+
     const STORAGE_KEY = "der_ucv_aprobadas_v2";
+
     function obtenerAprobadas() {
       try {
         return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
@@ -348,6 +349,7 @@
       }
       return total;
     }
+
     function crearBotonMateria(materia) {
       const aprobadas = obtenerAprobadas();
       let reqsNoAprob = requisitosNoAprobados(materia, aprobadas);
@@ -380,6 +382,7 @@
       }
       return btn;
     }
+
     function crearBotonEspecial(especial) {
       const aprobadas = obtenerAprobadas();
       const totalCredAprob = calcCreditosAprobados(aprobadas);
@@ -418,6 +421,7 @@
       }
       return btn;
     }
+
     function renderMalla() {
       // Vaciar bloques
       document.getElementById('primer-ano-block').innerHTML = '';
@@ -452,14 +456,14 @@
         especialesBlock.appendChild(crearBotonEspecial(especial));
       });
 
-      // Caja info adicional sin negrita excepto palabras claves
       const infoDiv = document.createElement("div");
       infoDiv.className = "info-col";
       infoDiv.innerHTML =
-        `Para cursar <b>Seminario</b> o Curso de Extensión, deben haberse aprobado 72 créditos.<br>` +
+        `Para cursar <b>Seminario</b> o <b>Curso de Extensión</b>, deben haberse aprobado 72 créditos.<br>` +
         `Para realizar <b>Servicio Comunitario</b>, deben haberse aprobado 91 créditos.`;
       especialesBlock.appendChild(infoDiv);
     }
+
     function toggleAprobada(matId) {
       let aprobadas = obtenerAprobadas();
       if (aprobadas.includes(matId)) {
@@ -470,6 +474,7 @@
       guardarAprobadas(aprobadas);
       renderMalla();
     }
+
     window.addEventListener("DOMContentLoaded", renderMalla);
     document.querySelector("h1").ondblclick = function(e){
       if(e.shiftKey){
