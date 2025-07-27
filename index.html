@@ -28,13 +28,13 @@
   }
   .main-container {
     display: flex;
-    justify-content: center;
+    justify-content: center; /* Centra horizontalmente */
     gap: 30px;
     max-width: 1280px;
     margin: 0 auto 35px auto;
     padding: 0 10px;
     flex-wrap: wrap;
-    align-items: flex-start; /* No estira columnas, solo las alinea arriba */
+    align-items: flex-start; /* Alínea columnas arriba, sin estirar altura */
   }
   .vertical-column {
     display: flex;
@@ -55,17 +55,7 @@
     flex-direction: column;
     align-items: stretch;
     flex-shrink: 0;
-    /* Elimina cualquier flex-grow para que no estire */
-    flex-grow: 0 !important;
-  }
-  /* Quitar flex-grow de todos */
-  #primer-ano-block,
-  #tercer-ano-block,
-  #cuarto-ano-block,
-  #quinto-ano-block,
-  #segundo-ano-block,
-  #especiales-block {
-    flex-grow: 0 !important;
+    flex-grow: 0 !important; /* Sin crecimiento */
   }
   .col-title {
     font-family: 'Montserrat', Arial, sans-serif;
@@ -194,244 +184,250 @@
 </style>
 </head>
 <body>
-  <h1 title="Haz Shift + doble clic para limpiar el progreso">
-    Malla Curricular - Derecho<br>Universidad Central de Venezuela
-  </h1>
+<h1 title="Haz Shift + doble clic para limpiar el progreso">
+  Malla Curricular - Derecho<br>Universidad Central de Venezuela
+</h1>
 
-  <div class="main-container" id="main-container">
-    <div class="vertical-column" id="col-1">
-      <div class="column-block" id="primer-ano-block"></div>
-      <div class="column-block" id="cuarto-ano-block"></div>
-    </div>
-    <div class="vertical-column" id="col-2">
-      <div class="column-block" id="segundo-ano-block"></div>
-      <div class="column-block" id="quinto-ano-block"></div>
-    </div>
-    <div class="vertical-column" id="col-3">
-      <div class="column-block" id="tercer-ano-block"></div>
-      <div class="column-block" id="especiales-block"></div>
-    </div>
+<div class="main-container" id="main-container">
+  <div class="vertical-column" id="col-1">
+    <div class="column-block" id="primer-ano-block"></div>
+    <div class="column-block" id="cuarto-ano-block"></div>
   </div>
 
-  <div class="footer">
-    taehyung te amo
+  <div class="vertical-column" id="col-2">
+    <div class="column-block" id="segundo-ano-block"></div>
+    <div class="column-block" id="quinto-ano-block"></div>
   </div>
 
-  <script>
-    const MALLA = [
-      { year: "Primer año", materias: [
-        { id: "1101", nombre: "Derecho Civil I", uc: 6 },
-        { id: "1201", nombre: "Derecho Constitucional", uc: 6 },
-        { id: "1501", nombre: "Introducción al Derecho", uc: 6 },
-        { id: "1502", nombre: "Derecho Romano I", uc: 6 },
-        { id: "1601", nombre: "Economía Política", uc: 6 },
-        { id: "1602", nombre: "Sociología Jurídica", uc: 6 }
-      ]},
-      { year: "Segundo año", materias: [
-        { id: "1102", nombre: "Derecho Civil II", uc: 6, deps: ["1101", "1501"] },
-        { id: "1202", nombre: "Derecho Administrativo I", uc: 6, deps: ["1201"] },
-        { id: "1206", nombre: "Derecho Internacional Público", uc: 6, deps: ["1201"] },
-        { id: "1301", nombre: "Derecho Penal I", uc: 6 },
-        { id: "1303", nombre: "Criminología", uc: 6 },
-        { id: "1503", nombre: "Derecho Romano II", uc: 6, deps: ["1502"] }
-      ]},
-      { year: "Tercer año", materias: [
-        { id: "1103", nombre: "Derecho Civil III", uc: 6, deps: ["1101", "1501"] },
-        { id: "1203", nombre: "Derecho Administrativo II", uc: 6, deps: ["1202"] },
-        { id: "1205", nombre: "Finanzas Públicas", uc: 6, deps: ["1202", "1601"] },
-        { id: "1302", nombre: "Derecho Penal II", uc: 6, deps: ["1301"] },
-        { id: "1504", nombre: "Filosofía del Derecho", uc: 6 },
-        { id: "1902", nombre: "Práctica Jurídica I", uc: 6, deps: ["1101", "1501"] }
-      ]},
-      { year: "Cuarto año", materias: [
-        { id: "1104", nombre: "Derecho Civil IV", uc: 6, deps: ["1102"] },
-        { id: "1106", nombre: "Contratos y Garantías", uc: 6, deps: ["1103"] },
-        { id: "1107", nombre: "Derecho Mercantil I", uc: 6, deps: ["1103"] },
-        { id: "1109", nombre: "Derecho del trabajo", uc: 6, deps: ["1103"] },
-        { id: "1401", nombre: "Derecho Procesal Civil I", uc: 6, deps: ["1102"] },
-        { id: "1903", nombre: "Práctica Jurídica II", uc: 6, deps: ["1902"] }
-      ]},
-      { year: "Quinto año", materias: [
-        { id: "1108", nombre: "Derecho Mercantil II", uc: 6, deps: ["1107"] },
-        { id: "1110", nombre: "Derecho Internacional Privado", uc: 6, deps: ["1103", "1401"] },
-        { id: "1207", nombre: "Derecho Administrativo III", uc: 6, deps: ["1203", "1401"] },
-        { id: "1402", nombre: "Derecho Procesal Civil II", uc: 6, deps: ["1401"] },
-        { id: "1403", nombre: "Derecho Procesal Penal", uc: 6, deps: ["1302", "1401"] },
-        { id: "1904", nombre: "Práctica Jurídica III", uc: 6, deps: ["1401", "1903"] }
-      ]}
-    ];
+  <div class="vertical-column" id="col-3">
+    <div class="column-block" id="tercer-ano-block"></div>
+    <div class="column-block" id="especiales-block"></div>
+  </div>
+</div>
 
-    const ESPECIALES = [
-      { id: "1905", nombre: "Seminario / Curso de Extensión", uc: 2, necesitaCreditos: 72 },
-      { id: "SC", nombre: "Servicio Comunitario", uc: 0, necesitaCreditos: 91 }
-    ];
+<div class="footer">
+  taehyung te amo
+</div>
 
-    const STORAGE_KEY = "der_ucv_aprobadas_v2";
+<script>
+  const MALLA = [
+    { year: "Primer año", materias: [
+      { id: "1101", nombre: "Derecho Civil I", uc: 6},
+      { id: "1201", nombre: "Derecho Constitucional", uc: 6},
+      { id: "1501", nombre: "Introducción al Derecho", uc: 6},
+      { id: "1502", nombre: "Derecho Romano I", uc: 6},
+      { id: "1601", nombre: "Economía Política", uc: 6},
+      { id: "1602", nombre: "Sociología Jurídica", uc: 6}
+    ]},
+    { year: "Segundo año", materias: [
+      { id: "1102", nombre: "Derecho Civil II", uc: 6, deps: ["1101", "1501"] },
+      { id: "1202", nombre: "Derecho Administrativo I", uc: 6, deps: ["1201"] },
+      { id: "1206", nombre: "Derecho Internacional Público", uc: 6, deps: ["1201"] },
+      { id: "1301", nombre: "Derecho Penal I", uc: 6 },
+      { id: "1303", nombre: "Criminología", uc: 6 },
+      { id: "1503", nombre: "Derecho Romano II", uc: 6, deps: ["1502"] }
+    ]},
+    { year: "Tercer año", materias: [
+      { id: "1103", nombre: "Derecho Civil III", uc: 6, deps: ["1101", "1501"] },
+      { id: "1203", nombre: "Derecho Administrativo II", uc: 6, deps: ["1202"] },
+      { id: "1205", nombre: "Finanzas Públicas", uc: 6, deps: ["1202", "1601"] },
+      { id: "1302", nombre: "Derecho Penal II", uc: 6, deps: ["1301"] },
+      { id: "1504", nombre: "Filosofía del Derecho", uc: 6 },
+      { id: "1902", nombre: "Práctica Jurídica I", uc: 6, deps: ["1101", "1501"]}
+    ]},
+    { year: "Cuarto año", materias: [
+      { id: "1104", nombre: "Derecho Civil IV", uc: 6, deps: ["1102"] },
+      { id: "1106", nombre: "Contratos y Garantías", uc: 6, deps: ["1103"] },
+      { id: "1107", nombre: "Derecho Mercantil I", uc: 6, deps: ["1103"] },
+      { id: "1109", nombre: "Derecho del trabajo", uc: 6, deps: ["1103"] },
+      { id: "1401", nombre: "Derecho Procesal Civil I", uc: 6, deps: ["1102"] },
+      { id: "1903", nombre: "Práctica Jurídica II", uc: 6, deps: ["1902"]}
+    ]},
+    { year: "Quinto año", materias: [
+      { id: "1108", nombre: "Derecho Mercantil II", uc: 6, deps: ["1107"] },
+      { id: "1110", nombre: "Derecho Internacional Privado", uc: 6, deps: ["1103", "1401"] },
+      { id: "1207", nombre: "Derecho Administrativo III", uc: 6, deps: ["1203", "1401"] },
+      { id: "1402", nombre: "Derecho Procesal Civil II", uc: 6, deps: ["1401"] },
+      { id: "1403", nombre: "Derecho Procesal Penal", uc: 6, deps: ["1302", "1401"] },
+      { id: "1904", nombre: "Práctica Jurídica III", uc: 6, deps: ["1401", "1903"]}
+    ]}
+  ];
 
-    function obtenerAprobadas() {
-      try {
-        return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-      } catch {
-        return [];
+  const ESPECIALES = [
+    { id: "1905", nombre: "Seminario / Curso de Extensión", uc: 2, necesitaCreditos: 72 },
+    { id: "SC", nombre: "Servicio Comunitario", uc: 0, necesitaCreditos: 91 }
+  ];
+
+  const STORAGE_KEY = "der_ucv_aprobadas_v2";
+
+  function obtenerAprobadas() {
+    try {
+      return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+    } catch {
+      return [];
+    }
+  }
+
+  function guardarAprobadas(aprobadas) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(aprobadas));
+  }
+
+  function getMateriaPorId(id) {
+    for (let bloque of MALLA) {
+      let encontrada = bloque.materias.find(mat => mat.id === id);
+      if(encontrada) return encontrada;
+    }
+    if(id === "SC") return ESPECIALES.find(esp => esp.id === id) || null;
+    return null;
+  }
+
+  function requisitosNoAprobados(materia, aprobadas){
+    if (!materia.deps) return [];
+    return (materia.deps || []).filter(reqId => !aprobadas.includes(reqId));
+  }
+
+  function calcCreditosAprobados(aprobadas){
+    let total = 0;
+    for(let bloque of MALLA){
+      for(let mat of bloque.materias){
+        if(aprobadas.includes(mat.id) && mat.uc) total += mat.uc;
       }
     }
-
-    function guardarAprobadas(aprobadas) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(aprobadas));
+    for(let esp of ESPECIALES){
+      if(aprobadas.includes(esp.id) && esp.uc) total += esp.uc;
     }
+    return total;
+  }
 
-    function getMateriaPorId(id) {
-      for (let bloque of MALLA) {
-        let encontrada = bloque.materias.find(mat => mat.id === id);
-        if (encontrada) return encontrada;
-      }
-      if (id === "SC") return ESPECIALES.find(esp => esp.id === id) || null;
-      return null;
+  function crearBotonMateria(materia){
+    const aprobadas = obtenerAprobadas();
+    let reqsNoAprob = requisitosNoAprobados(materia, aprobadas);
+    let bloqueada = reqsNoAprob.length > 0;
+    let btn = document.createElement("button");
+    btn.className = "asignatura";
+    btn.setAttribute("data-id", materia.id);
+    btn.tabIndex = 0;
+    btn.innerHTML = `<span>${materia.nombre}</span><span class="uc-label">${materia.uc} UC</span>`;
+    if(aprobadas.includes(materia.id)){
+      btn.classList.add("aprobada");
+      btn.setAttribute("aria-pressed", "true");
+    } else {
+      btn.setAttribute("aria-pressed", "false");
     }
-
-    function requisitosNoAprobados(materia, aprobadas) {
-      if (!materia.deps) return [];
-      return (materia.deps || []).filter(reqId => !aprobadas.includes(reqId));
+    if(bloqueada){
+      btn.setAttribute("aria-disabled", "true");
+      btn.tabIndex = -1;
+      let tooltip = document.createElement("span");
+      tooltip.className = "tooltip";
+      tooltip.textContent = `Debes aprobar primero: ${reqsNoAprob.map(id => {
+        let mat = getMateriaPorId(id);
+        return mat ? mat.nombre : id;
+      }).join(", ")}`;
+      btn.appendChild(tooltip);
+    } else {
+      btn.removeAttribute("aria-disabled");
+      btn.addEventListener("click", () => toggleAprobada(materia.id));
     }
+    return btn;
+  }
 
-    function calcCreditosAprobados(aprobadas) {
-      let total = 0;
-      for (let bloque of MALLA) {
-        for (let mat of bloque.materias) {
-          if (aprobadas.includes(mat.id) && mat.uc) total += mat.uc;
-        }
-      }
-      for (let esp of ESPECIALES) {
-        if (aprobadas.includes(esp.id) && esp.uc) total += esp.uc;
-      }
-      return total;
+  function crearBotonEspecial(especial){
+    const aprobadas = obtenerAprobadas();
+    const totalCredAprob = calcCreditosAprobados(aprobadas);
+    const bloqueada = totalCredAprob < especial.necesitaCreditos;
+    const btn = document.createElement("button");
+    btn.className = "especial-btn";
+    btn.setAttribute("data-id", especial.id);
+    const nombreSpan = document.createElement("span");
+    nombreSpan.textContent = especial.nombre;
+    btn.appendChild(nombreSpan);
+    if(especial.uc && especial.uc > 0){
+      const ucSpan = document.createElement("span");
+      ucSpan.className = "especial-uc-label";
+      ucSpan.textContent = `${especial.uc} UC`;
+      btn.appendChild(ucSpan);
     }
+    if(aprobadas.includes(especial.id)){
+      btn.classList.add("aprobada");
+      btn.setAttribute("aria-pressed", "true");
+    } else {
+      btn.setAttribute("aria-pressed", "false");
+    }
+    if(bloqueada){
+      btn.setAttribute("aria-disabled", "true");
+      btn.tabIndex = -1;
+      const tooltip = document.createElement("span");
+      tooltip.className = "tooltip";
+      tooltip.textContent = `Debes tener aprobados ${especial.necesitaCreditos} créditos.`;
+      btn.appendChild(tooltip);
+    } else {
+      btn.removeAttribute("aria-disabled");
+      btn.addEventListener("click", () => toggleAprobada(especial.id));
+    }
+    return btn;
+  }
 
-    function crearBotonMateria(materia) {
-      const aprobadas = obtenerAprobadas();
-      let reqsNoAprob = requisitosNoAprobados(materia, aprobadas);
-      let bloqueada = reqsNoAprob.length > 0;
-      let btn = document.createElement("button");
-      btn.className = "asignatura";
-      btn.setAttribute("data-id", materia.id);
-      btn.tabIndex = 0;
-      btn.innerHTML = `<span>${materia.nombre}</span><span class="uc-label">${materia.uc} UC</span>`;
-      if (aprobadas.includes(materia.id)) {
-        btn.classList.add("aprobada");
-        btn.setAttribute("aria-pressed", "true");
-      } else {
-        btn.setAttribute("aria-pressed", "false");
+  function renderMalla(){
+    document.getElementById('primer-ano-block').innerHTML = "";
+    document.getElementById('segundo-ano-block').innerHTML = "";
+    document.getElementById('tercer-ano-block').innerHTML = "";
+    document.getElementById('cuarto-ano-block').innerHTML = "";
+    document.getElementById('quinto-ano-block').innerHTML = "";
+    document.getElementById('especiales-block').innerHTML = "";
+
+    MALLA.forEach(bloque => {
+      let containerId = "";
+      switch(bloque.year){
+        case "Primer año": containerId = "primer-ano-block"; break;
+        case "Segundo año": containerId = "segundo-ano-block"; break;
+        case "Tercer año": containerId = "tercer-ano-block"; break;
+        case "Cuarto año": containerId = "cuarto-ano-block"; break;
+        case "Quinto año": containerId = "quinto-ano-block"; break;
       }
-      if (bloqueada) {
-        btn.setAttribute("aria-disabled", "true");
-        btn.tabIndex = -1;
-        let tooltip = document.createElement("span");
-        tooltip.className = "tooltip";
-        let textosFaltan = reqsNoAprob.map(id => {
-          let mat = getMateriaPorId(id);
-          return mat ? mat.nombre : id;
+      if(containerId){
+        const cont = document.getElementById(containerId);
+        cont.insertAdjacentHTML('beforeend', `<div class="col-title">${bloque.year}</div>`);
+        bloque.materias.forEach(materia => {
+          cont.appendChild(crearBotonMateria(materia));
         });
-        tooltip.textContent = `Debes aprobar primero: ${textosFaltan.join(", ")}`;
-        btn.appendChild(tooltip);
-      } else {
-        btn.removeAttribute("aria-disabled");
-        btn.addEventListener("click", () => toggleAprobada(materia.id));
       }
-      return btn;
-    }
+    });
 
-    function crearBotonEspecial(especial) {
-      const aprobadas = obtenerAprobadas();
-      const totalCredAprob = calcCreditosAprobados(aprobadas);
-      const bloqueada = totalCredAprob < especial.necesitaCreditos;
-      const btn = document.createElement("button");
-      btn.className = "especial-btn";
-      btn.setAttribute("data-id", especial.id);
-      const nombreSpan = document.createElement("span");
-      nombreSpan.textContent = especial.nombre;
-      btn.appendChild(nombreSpan);
-      if (especial.uc && especial.uc > 0) {
-        const ucSpan = document.createElement("span");
-        ucSpan.className = "especial-uc-label";
-        ucSpan.textContent = `${especial.uc} UC`;
-        btn.appendChild(ucSpan);
-      }
-      if (aprobadas.includes(especial.id)) {
-        btn.classList.add("aprobada");
-        btn.setAttribute("aria-pressed", "true");
-      } else {
-        btn.setAttribute("aria-pressed", "false");
-      }
-      if (bloqueada) {
-        btn.setAttribute("aria-disabled", "true");
-        btn.tabIndex = -1;
-        const tooltip = document.createElement("span");
-        tooltip.className = "tooltip";
-        tooltip.textContent = `Debes tener aprobados ${especial.necesitaCreditos} créditos.`;
-        btn.appendChild(tooltip);
-      } else {
-        btn.removeAttribute("aria-disabled");
-        btn.addEventListener("click", () => toggleAprobada(especial.id));
-      }
-      return btn;
-    }
+    const especialesBlock = document.getElementById('especiales-block');
+    ESPECIALES.forEach(especial => {
+      especialesBlock.appendChild(crearBotonEspecial(especial));
+    });
 
-    function renderMalla() {
-      document.getElementById('primer-ano-block').innerHTML = '';
-      document.getElementById('segundo-ano-block').innerHTML = '';
-      document.getElementById('tercer-ano-block').innerHTML = '';
-      document.getElementById('cuarto-ano-block').innerHTML = '';
-      document.getElementById('quinto-ano-block').innerHTML = '';
-      document.getElementById('especiales-block').innerHTML = '';
-      MALLA.forEach(bloque => {
-        let containerId = '';
-        switch (bloque.year) {
-          case "Primer año": containerId = 'primer-ano-block'; break;
-          case "Segundo año": containerId = 'segundo-ano-block'; break;
-          case "Tercer año": containerId = 'tercer-ano-block'; break;
-          case "Cuarto año": containerId = 'cuarto-ano-block'; break;
-          case "Quinto año": containerId = 'quinto-ano-block'; break;
-        }
-        if(containerId) {
-          const cont = document.getElementById(containerId);
-          cont.insertAdjacentHTML('beforeend', `<div class="col-title">${bloque.year}</div>`);
-          bloque.materias.forEach(materia => {
-            cont.appendChild(crearBotonMateria(materia));
-          });
-        }
-      });
-      const especialesBlock = document.getElementById('especiales-block');
-      ESPECIALES.forEach(especial => {
-        especialesBlock.appendChild(crearBotonEspecial(especial));
-      });
-      const infoDiv = document.createElement("div");
-      infoDiv.className = "info-col";
-      infoDiv.innerHTML =
-        `<p>Para cursar <b>Seminario o Curso de Extensión</b>, deben haberse aprobado 72 créditos.</p>` +
-        `<p>Para realizar <b>Servicio Comunitario</b>, deben haberse aprobado 91 créditos.</p>`;
-      especialesBlock.appendChild(infoDiv);
-    }
+    const infoDiv = document.createElement('div');
+    infoDiv.className = 'info-col';
+    infoDiv.innerHTML = `
+      <p>Para cursar <b>Seminario o Curso de Extensión</b>, deben haberse aprobado 72 créditos.</p>
+      <p>Para realizar <b>Servicio Comunitario</b>, deben haberse aprobado 91 créditos.</p>
+    `;
+    especialesBlock.appendChild(infoDiv);
+  }
 
-    function toggleAprobada(matId) {
-      let aprobadas = obtenerAprobadas();
-      if (aprobadas.includes(matId)) {
-        aprobadas = aprobadas.filter(id => id !== matId);
-      } else {
-        aprobadas.push(matId);
-      }
-      guardarAprobadas(aprobadas);
-      renderMalla();
+  function toggleAprobada(matId){
+    let aprobadas = obtenerAprobadas();
+    if(aprobadas.includes(matId)){
+      aprobadas = aprobadas.filter(id => id !== matId);
+    } else {
+      aprobadas.push(matId);
     }
+    guardarAprobadas(aprobadas);
+    renderMalla();
+  }
 
-    window.addEventListener("DOMContentLoaded", renderMalla);
-    document.querySelector("h1").ondblclick = function(e){
-      if(e.shiftKey){
-        if(confirm("¿Seguro que deseas borrar todo el progreso guardado?")){
-          localStorage.removeItem(STORAGE_KEY);
-          renderMalla();
-        }
+  window.addEventListener("DOMContentLoaded", renderMalla);
+
+  document.querySelector("h1").ondblclick = function(e){
+    if(e.shiftKey){
+      if(confirm("¿Seguro que deseas borrar todo el progreso guardado?")){
+        localStorage.removeItem(STORAGE_KEY);
+        renderMalla();
       }
     }
-  </script>
+  }
+</script>
 </body>
 </html>
