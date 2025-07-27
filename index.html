@@ -26,7 +26,6 @@
       user-select: none;
       line-height: 1.2;
     }
-    /* Contenedor general para 3 columnas lado a lado */
     .main-container {
       display: flex;
       justify-content: center;
@@ -35,7 +34,7 @@
       margin: 0 auto 35px auto;
       padding: 0 10px;
       flex-wrap: wrap;
-      align-items: stretch; /* Línea clave para igualar altura columnas */
+      align-items: stretch; /* Clave para altura uniforme entre columnas */
     }
     .vertical-column {
       display: flex;
@@ -57,7 +56,7 @@
       align-items: stretch;
       flex-shrink: 0;
     }
-    /* Bloques inferiores con flex-grow para estirarse y igualar alturas */
+    /* Hacen crecer los bloques inferiores para igualar altura total */
     #tercer-ano-block,
     #cuarto-ano-block,
     #quinto-ano-block,
@@ -143,7 +142,6 @@
       opacity: 1;
       pointer-events: auto;
     }
-    /* Casillas especiales con estilo igual a materias */
     button.especial-btn {
       font-size: 1em;
       padding: 14px 13px;
@@ -192,7 +190,6 @@
       opacity: 1;
       pointer-events: auto;
     }
-    /* Etiqueta pequeña para UC al lado derecho en casillas especiales */
     .especial-uc-label {
       font-size: 0.93em;
       padding-left: 7px;
@@ -202,7 +199,6 @@
       flex-shrink: 0;
       user-select: none;
     }
-    /* Caja info adicional con fondo blanco y texto azul, con negrita sólo en palabras clave */
     .info-col {
       background: #fff;
       border-radius: 12px;
@@ -220,7 +216,6 @@
       line-height: 1.5;
       min-height: 66px;
     }
-    /* Quitar margenes extra en párrafos dentro de info-col */
     .info-col p {
       margin-top: 0;
       margin-bottom: 0;
@@ -257,19 +252,14 @@
   </h1>
 
   <div class="main-container" id="main-container">
-    <!-- Columna 1: Primer año arriba, Cuarto año abajo -->
     <div class="vertical-column" id="col-1">
       <div class="column-block" id="primer-ano-block"></div>
       <div class="column-block" id="cuarto-ano-block"></div>
     </div>
-
-    <!-- Columna 2: Segundo año arriba, Quinto año abajo -->
     <div class="vertical-column" id="col-2">
       <div class="column-block" id="segundo-ano-block"></div>
       <div class="column-block" id="quinto-ano-block"></div>
     </div>
-
-    <!-- Columna 3: Tercer año arriba, Casillas especiales abajo -->
     <div class="vertical-column" id="col-3">
       <div class="column-block" id="tercer-ano-block"></div>
       <div class="column-block" id="especiales-block"></div>
@@ -504,5 +494,6 @@
       }
     }
   </script>
+
 </body>
 </html>
