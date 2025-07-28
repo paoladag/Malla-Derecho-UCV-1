@@ -44,7 +44,7 @@
       position: fixed;
       top: 12px;
       right: 12px;
-      max-width: 120px;
+      max-width: 210px;
       height: auto;
       z-index: 10000;
       user-select: none;
@@ -264,6 +264,10 @@
     <div class="vertical-column" id="col-cuarto-ano">
       <div class="column-block lower-block" id="cuarto-ano-block"></div>
     </div>
+    <!-- Quinto año -->
+    <div class="vertical-column" id="col-quinto-ano">
+      <div class="column-block lower-block" id="quinto-ano-block"></div>
+    </div>
     <!-- Casillas especiales -->
     <div class="vertical-column" id="col-especiales">
       <div class="column-block lower-block" id="especiales-block"></div>
@@ -316,6 +320,17 @@
           { id: "1109", nombre: "Derecho del trabajo", uc: 6, deps: ["1103"] },
           { id: "1401", nombre: "Derecho Procesal Civil I", uc: 6, deps: ["1102"] },
           { id: "1903", nombre: "Práctica Jurídica II", uc: 6, deps: ["1902"] },
+        ],
+      },
+      {
+        year: "Quinto año",
+        materias: [
+          { id: "1108", nombre: "Derecho Mercantil II", uc: 6, deps: ["1107"] },
+          { id: "1110", nombre: "Derecho Internacional Privado", uc: 6, deps: ["1103", "1401"] },
+          { id: "1207", nombre: "Derecho Administrativo III", uc: 6, deps: ["1203", "1401"] },
+          { id: "1402", nombre: "Derecho Procesal Civil II", uc: 6, deps: ["1401"] },
+          { id: "1403", nombre: "Derecho Procesal Penal", uc: 6, deps: ["1302", "1401"] },
+          { id: "1904", nombre: "Práctica Jurídica III", uc: 6, deps: ["1401", "1903"] },
         ],
       },
     ];
@@ -436,79 +451,83 @@
     }
 
     function renderMalla() {
-      // Vaciar todo
-      document.getElementById("primer-ano-block").innerHTML = "";
-      document.getElementById("segundo-ano-block").innerHTML = "";
-      document.getElementById("tercer-ano-block").innerHTML = "";
-      document.getElementById("cuarto-ano-block").innerHTML = "";
-      document.getElementById("especiales-block").innerHTML = "";
+      // Limpiar todos los bloques
+      ['primer-ano-block','segundo-ano-block','tercer-ano-block','cuarto-ano-block','quinto-ano-block','especiales-block'].forEach(id => {
+        document.getElementById(id).innerHTML = '';
+      });
 
       // Primer año
-      const primerCon = document.getElementById("primer-ano-block");
-      primerCon.insertAdjacentHTML("beforeend", `<div class="col-title">Primer año</div>`);
-      MALLA.find((b) => b.year === "Primer año").materias.forEach((m) => {
-        primerCon.appendChild(crearBotonMateria(m));
+      const c1 = document.getElementById('primer-ano-block');
+      c1.insertAdjacentHTML('beforeend', `<div class="col-title">Primer año</div>`);
+      MALLA.find(b => b.year === 'Primer año').materias.forEach(m => {
+        c1.appendChild(crearBotonMateria(m));
       });
 
       // Segundo año
-      const segundoCon = document.getElementById("segundo-ano-block");
-      segundoCon.insertAdjacentHTML("beforeend", `<div class="col-title">Segundo año</div>`);
-      MALLA.find((b) => b.year === "Segundo año").materias.forEach((m) => {
-        segundoCon.appendChild(crearBotonMateria(m));
+      const c2 = document.getElementById('segundo-ano-block');
+      c2.insertAdjacentHTML('beforeend', `<div class="col-title">Segundo año</div>`);
+      MALLA.find(b => b.year === 'Segundo año').materias.forEach(m => {
+        c2.appendChild(crearBotonMateria(m));
       });
 
       // Tercer año
-      const tercerCon = document.getElementById("tercer-ano-block");
-      tercerCon.insertAdjacentHTML("beforeend", `<div class="col-title">Tercer año</div>`);
-      MALLA.find((b) => b.year === "Tercer año").materias.forEach((m) => {
-        tercerCon.appendChild(crearBotonMateria(m));
+      const c3 = document.getElementById('tercer-ano-block');
+      c3.insertAdjacentHTML('beforeend', `<div class="col-title">Tercer año</div>`);
+      MALLA.find(b => b.year === 'Tercer año').materias.forEach(m => {
+        c3.appendChild(crearBotonMateria(m));
       });
 
       // Cuarto año
-      const cuartoCon = document.getElementById("cuarto-ano-block");
-      cuartoCon.insertAdjacentHTML("beforeend", `<div class="col-title">Cuarto año</div>`);
-      MALLA.find((b) => b.year === "Cuarto año").materias.forEach((m) => {
-        cuartoCon.appendChild(crearBotonMateria(m));
+      const c4 = document.getElementById('cuarto-ano-block');
+      c4.insertAdjacentHTML('beforeend', `<div class="col-title">Cuarto año</div>`);
+      MALLA.find(b => b.year === 'Cuarto año').materias.forEach(m => {
+        c4.appendChild(crearBotonMateria(m));
       });
 
-      // Especiales
-      const especialesCon = document.getElementById("especiales-block");
-      ESPECIALES.forEach((e) => {
-        especialesCon.appendChild(crearBotonEspecial(e));
+      // Quinto año
+      const c5 = document.getElementById('quinto-ano-block');
+      c5.insertAdjacentHTML('beforeend', `<div class="col-title">Quinto año</div>`);
+      MALLA.find(b => b.year === 'Quinto año').materias.forEach(m => {
+        c5.appendChild(crearBotonMateria(m));
       });
 
-      // Info especiales
-      const infoDiv = document.createElement("div");
-      infoDiv.className = "info-col";
-      infoDiv.innerHTML =
-        `<p>Para cursar <b>Seminario o Curso de Extensión</b>, deben haberse aprobado 72 créditos.</p>` +
-        `<p>Para realizar <b>Servicio Comunitario</b>, deben haberse aprobado 91 créditos.</p>`;
-      especialesCon.appendChild(infoDiv);
+      // Casillas especiales
+      const c6 = document.getElementById('especiales-block');
+      ESPECIALES.forEach(e => {
+        c6.appendChild(crearBotonEspecial(e));
+      });
+
+      // Info casillas especiales
+      const infoDiv = document.createElement('div');
+      infoDiv.className = 'info-col';
+      infoDiv.innerHTML = `
+        <p>Para cursar <b>Seminario o Curso de Extensión</b>, deben haberse aprobado 72 créditos.</p>
+        <p>Para realizar <b>Servicio Comunitario</b>, deben haberse aprobado 91 créditos.</p>
+      `;
+      c6.appendChild(infoDiv);
     }
 
-    function toggleAprobada(matId) {
+    function toggleAprobada(id) {
       let aprobadas = obtenerAprobadas();
-      if (aprobadas.includes(matId)) {
-        aprobadas = aprobadas.filter((id) => id !== matId);
+      if (aprobadas.includes(id)) {
+        aprobadas = aprobadas.filter(i => i !== id);
       } else {
-        aprobadas.push(matId);
+        aprobadas.push(id);
       }
       guardarAprobadas(aprobadas);
       renderMalla();
     }
 
-    window.addEventListener("DOMContentLoaded", renderMalla);
+    window.addEventListener('DOMContentLoaded', renderMalla);
 
-    document.getElementById("btn-regresa").addEventListener("click", () => {
-      window.location.href = "https://sites.google.com/view/masestudiantilucv/inicio";
+    document.getElementById('btn-regresa').addEventListener('click', () => {
+      window.location.href = 'https://sites.google.com/view/masestudiantilucv/inicio';
     });
 
-    document.querySelector("h1").ondblclick = (e) => {
-      if (e.shiftKey) {
-        if (confirm("¿Seguro que deseas borrar todo el progreso guardado?")) {
-          localStorage.removeItem(STORAGE_KEY);
-          renderMalla();
-        }
+    document.querySelector('h1').ondblclick = e => {
+      if(e.shiftKey && confirm('¿Seguro que deseas borrar todo el progreso guardado?')){
+        localStorage.removeItem(STORAGE_KEY);
+        renderMalla();
       }
     };
   </script>
