@@ -59,25 +59,27 @@
       user-select: none;
       line-height: 1.2;
     }
-    /* MAIN CONTAINER - use grid for flexible layout */
+    /* Contenedor principal: diseño en 3 columnas y 2 filas para escritorio */
     .main-container {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(250px, 1fr));
-      grid-gap: 30px;
       max-width: 1280px;
       margin: 0 auto 35px auto;
       padding: 0 10px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(250px, 1fr));
+      grid-template-rows: auto auto;
+      grid-gap: 30px;
+      gap:30px;
     }
 
-    /* Column blocks for each "año" */
+    /* Columna y bloque individual */
     .vertical-column {
       display: flex;
       flex-direction: column;
       gap: 30px;
-      min-width: 250px;
-      max-width: 100%;
       box-sizing: border-box;
       align-items: stretch;
+      min-width: 250px;
+      max-width: 100%;
     }
     .column-block {
       background: #FFBD59;
@@ -90,13 +92,45 @@
       flex-shrink: 0;
       min-height: 100px;
     }
-
-    /* Flex-grow only for lower blocks if needed */
+    /* Bloques inferiores crecen para igualar altura */
+    .lower-block {
+      flex-grow: 1;
+    }
     .upper-block {
       flex-grow: 0;
     }
-    .lower-block {
-      flex-grow: 1;
+    /* ASIGNACIÓN DE COLUMNAS Y FILAS EN ESCRITORIO */
+    #col-1 {
+      grid-column: 1;
+      grid-row: 1 / 3; /* ocupa dos filas para tener bloque superior e inferior */
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+    #col-2 {
+      grid-column: 2;
+      grid-row: 1 / 3;
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+    #col-3 {
+      grid-column: 3;
+      grid-row: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+    #col-4 {
+      grid-column: 3;
+      grid-row: 2;
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+    #col-5 {
+      /* Este columna no tiene lugar en escritorio, estará oculta */
+      display: none;
     }
 
     .col-title {
@@ -201,16 +235,28 @@
       line-height: 1.4;
     }
     @media (max-width: 900px) {
-      /* Pasa a mostrar columnas apiladas verticalmente en orden natural */
+      /* En móvil apilamos columnas verticales en este orden */
       .main-container {
         display: flex;
         flex-direction: column;
         gap: 30px;
         align-items: center;
       }
-      .vertical-column {
+      #col-1, #col-2, #col-3, #col-4, #col-5 {
+        grid-column: auto !important;
+        grid-row: auto !important;
         width: 100% !important;
-        max-width: none !important;
+        max-width: 400px;
+        display: flex;
+        flex-direction: column;
+      }
+      /* Mostrar la columna 5 en móvil */
+      #col-5 {
+        display: flex;
+      }
+      /* Poner bloque inferior y superior junto en la misma columna */
+      .lower-block, .upper-block {
+        flex-grow: 0;
       }
       #btn-regresa {
         position: static;
@@ -248,269 +294,275 @@
   </h1>
 
   <div class="main-container" id="main-container">
-    <!-- Primer año -->
-    <div class="vertical-column" id="col-primer-ano">
+    <!-- Columna 1: Primer y Cuarto año -->
+    <div class="vertical-column" id="col-1">
       <div class="column-block upper-block" id="primer-ano-block"></div>
-    </div>
-    <!-- Segundo año -->
-    <div class="vertical-column" id="col-segundo-ano">
-      <div class="column-block upper-block" id="segundo-ano-block"></div>
-    </div>
-    <!-- Tercer año -->
-    <div class="vertical-column" id="col-tercer-ano">
-      <div class="column-block upper-block" id="tercer-ano-block"></div>
-    </div>
-    <!-- Cuarto año -->
-    <div class="vertical-column" id="col-cuarto-ano">
       <div class="column-block lower-block" id="cuarto-ano-block"></div>
     </div>
-    <!-- Casillas especiales -->
-    <div class="vertical-column" id="col-especiales">
+    <!-- Columna 2: Segundo y Quinto año -->
+    <div class="vertical-column" id="col-2">
+      <div class="column-block upper-block" id="segundo-ano-block"></div>
+      <div class="column-block lower-block" id="quinto-ano-block"></div>
+    </div>
+    <!-- Columna 3: Tercer año -->
+    <div class="vertical-column" id="col-3">
+      <div class="column-block upper-block" id="tercer-ano-block"></div>
+    </div>
+    <!-- Columna 4: Casillas especiales -->
+    <div class="vertical-column" id="col-4">
       <div class="column-block lower-block" id="especiales-block"></div>
+    </div>
+    <!-- Columna 5: Quinto año para móvil (oculto en escritorio) -->
+    <div class="vertical-column" id="col-5" style="display:none;">
+      <!-- Aquí podrías agregar contenido extra si quieres en móvil -->
     </div>
   </div>
 
   <div class="footer">Recuerda que: Unidos Somos Más</div>
 
-  <script>
-    const MALLA = [
-      {
-        year: "Primer año",
-        materias: [
-          { id: "1101", nombre: "Derecho Civil I", uc: 6 },
-          { id: "1201", nombre: "Derecho Constitucional", uc: 6 },
-          { id: "1501", nombre: "Introducción al Derecho", uc: 6 },
-          { id: "1502", nombre: "Derecho Romano I", uc: 6 },
-          { id: "1601", nombre: "Economía Política", uc: 6 },
-          { id: "1602", nombre: "Sociología Jurídica", uc: 6 },
-        ],
-      },
-      {
-        year: "Segundo año",
-        materias: [
-          { id: "1102", nombre: "Derecho Civil II", uc: 6, deps: ["1101", "1501"] },
-          { id: "1202", nombre: "Derecho Administrativo I", uc: 6, deps: ["1201"] },
-          { id: "1206", nombre: "Derecho Internacional Público", uc: 6, deps: ["1201"] },
-          { id: "1301", nombre: "Derecho Penal I", uc: 6 },
-          { id: "1303", nombre: "Criminología", uc: 6 },
-          { id: "1503", nombre: "Derecho Romano II", uc: 6, deps: ["1502"] },
-        ],
-      },
-      {
-        year: "Tercer año",
-        materias: [
-          { id: "1103", nombre: "Derecho Civil III", uc: 6, deps: ["1101", "1501"] },
-          { id: "1203", nombre: "Derecho Administrativo II", uc: 6, deps: ["1202"] },
-          { id: "1205", nombre: "Finanzas Públicas", uc: 6, deps: ["1202", "1601"] },
-          { id: "1302", nombre: "Derecho Penal II", uc: 6, deps: ["1301"] },
-          { id: "1504", nombre: "Filosofía del Derecho", uc: 6 },
-          { id: "1902", nombre: "Práctica Jurídica I", uc: 6, deps: ["1101", "1501"] },
-        ],
-      },
-      {
-        year: "Cuarto año",
-        materias: [
-          { id: "1104", nombre: "Derecho Civil IV", uc: 6, deps: ["1102"] },
-          { id: "1106", nombre: "Contratos y Garantías", uc: 6, deps: ["1103"] },
-          { id: "1107", nombre: "Derecho Mercantil I", uc: 6, deps: ["1103"] },
-          { id: "1109", nombre: "Derecho del trabajo", uc: 6, deps: ["1103"] },
-          { id: "1401", nombre: "Derecho Procesal Civil I", uc: 6, deps: ["1102"] },
-          { id: "1903", nombre: "Práctica Jurídica II", uc: 6, deps: ["1902"] },
-        ],
-      },
-    ];
+<script>
+// Datos MALLA y ESPECIALES igual que antes...
 
-    const ESPECIALES = [
-      { id: "1905", nombre: "Seminario / Curso de Extensión", uc: 2, necesitaCreditos: 72 },
-      { id: "SC", nombre: "Servicio Comunitario", uc: 0, necesitaCreditos: 91 },
-    ];
+const MALLA = [
+  { year: "Primer año", materias: [
+    { id: "1101", nombre: "Derecho Civil I", uc: 6},
+    { id: "1201", nombre: "Derecho Constitucional", uc: 6},
+    { id: "1501", nombre: "Introducción al Derecho", uc: 6},
+    { id: "1502", nombre: "Derecho Romano I", uc: 6},
+    { id: "1601", nombre: "Economía Política", uc: 6},
+    { id: "1602", nombre: "Sociología Jurídica", uc: 6}
+  ]},
+  { year: "Segundo año", materias: [
+    { id: "1102", nombre: "Derecho Civil II", uc: 6, deps: ["1101", "1501"] },
+    { id: "1202", nombre: "Derecho Administrativo I", uc: 6, deps: ["1201"] },
+    { id: "1206", nombre: "Derecho Internacional Público", uc: 6, deps: ["1201"] },
+    { id: "1301", nombre: "Derecho Penal I", uc: 6 },
+    { id: "1303", nombre: "Criminología", uc: 6 },
+    { id: "1503", nombre: "Derecho Romano II", uc: 6, deps: ["1502"] }
+  ]},
+  { year: "Tercer año", materias: [
+    { id: "1103", nombre: "Derecho Civil III", uc: 6, deps: ["1101", "1501"] },
+    { id: "1203", nombre: "Derecho Administrativo II", uc: 6, deps: ["1202"] },
+    { id: "1205", nombre: "Finanzas Públicas", uc: 6, deps: ["1202", "1601"] },
+    { id: "1302", nombre: "Derecho Penal II", uc: 6, deps: ["1301"] },
+    { id: "1504", nombre: "Filosofía del Derecho", uc: 6 },
+    { id: "1902", nombre: "Práctica Jurídica I", uc: 6, deps: ["1101", "1501"]}
+  ]},
+  { year: "Cuarto año", materias: [
+    { id: "1104", nombre: "Derecho Civil IV", uc: 6, deps: ["1102"] },
+    { id: "1106", nombre: "Contratos y Garantías", uc: 6, deps: ["1103"] },
+    { id: "1107", nombre: "Derecho Mercantil I", uc: 6, deps: ["1103"] },
+    { id: "1109", nombre: "Derecho del trabajo", uc: 6, deps: ["1103"] },
+    { id: "1401", nombre: "Derecho Procesal Civil I", uc: 6, deps: ["1102"] },
+    { id: "1903", nombre: "Práctica Jurídica II", uc: 6, deps: ["1902"]}
+  ]},
+  { year: "Quinto año", materias: [
+    { id: "1108", nombre: "Derecho Mercantil II", uc: 6, deps: ["1107"] },
+    { id: "1110", nombre: "Derecho Internacional Privado", uc: 6, deps: ["1103", "1401"] },
+    { id: "1207", nombre: "Derecho Administrativo III", uc: 6, deps: ["1203", "1401"] },
+    { id: "1402", nombre: "Derecho Procesal Civil II", uc: 6, deps: ["1401"] },
+    { id: "1403", nombre: "Derecho Procesal Penal", uc: 6, deps: ["1302", "1401"] },
+    { id: "1904", nombre: "Práctica Jurídica III", uc: 6, deps: ["1401", "1903"]}
+  ]}
+];
 
-    const STORAGE_KEY = "der_ucv_aprobadas_v2";
+const ESPECIALES = [
+  { id: "1905", nombre: "Seminario / Curso de Extensión", uc: 2, necesitaCreditos: 72 },
+  { id: "SC", nombre: "Servicio Comunitario", uc: 0, necesitaCreditos: 91 }
+];
 
-    function obtenerAprobadas() {
-      try {
-        return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-      } catch {
-        return [];
-      }
+const STORAGE_KEY = "der_ucv_aprobadas_v2";
+
+function obtenerAprobadas() {
+  try {
+    return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+  } catch {
+    return [];
+  }
+}
+
+function guardarAprobadas(aprobadas) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(aprobadas));
+}
+
+function getMateriaPorId(id) {
+  for (let bloque of MALLA) {
+    let encontrada = bloque.materias.find(mat => mat.id === id);
+    if (encontrada) return encontrada;
+  }
+  if (id === "SC") return ESPECIALES.find(esp => esp.id === id) || null;
+  return null;
+}
+
+function requisitosNoAprobados(materia, aprobadas) {
+  if (!materia.deps) return [];
+  return (materia.deps || []).filter(reqId => !aprobadas.includes(reqId));
+}
+
+function calcCreditosAprobados(aprobadas) {
+  let total = 0;
+  for (let bloque of MALLA) {
+    for (let mat of bloque.materias) {
+      if (aprobadas.includes(mat.id) && mat.uc) total += mat.uc;
     }
+  }
+  for (let esp of ESPECIALES) {
+    if (aprobadas.includes(esp.id) && esp.uc) total += esp.uc;
+  }
+  return total;
+}
 
-    function guardarAprobadas(aprobadas) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(aprobadas));
-    }
+function crearBotonMateria(materia) {
+  const aprobadas = obtenerAprobadas();
+  let reqsNoAprob = requisitosNoAprobados(materia, aprobadas);
+  let bloqueada = reqsNoAprob.length > 0;
+  let btn = document.createElement("button");
+  btn.className = "asignatura";
+  btn.setAttribute("data-id", materia.id);
+  btn.tabIndex = 0;
+  btn.innerHTML = `<span>${materia.nombre}</span><span class="uc-label">${materia.uc} UC</span>`;
+  if (aprobadas.includes(materia.id)) {
+    btn.classList.add("aprobada");
+    btn.setAttribute("aria-pressed", "true");
+  } else {
+    btn.setAttribute("aria-pressed", "false");
+  }
+  if (bloqueada) {
+    btn.setAttribute("aria-disabled", "true");
+    btn.tabIndex = -1;
+    let tooltip = document.createElement("span");
+    tooltip.className = "tooltip";
+    let textosFaltan = reqsNoAprob.map(id => {
+      let mat = getMateriaPorId(id);
+      return mat ? mat.nombre : id;
+    });
+    tooltip.textContent = `Debes aprobar primero: ${textosFaltan.join(", ")}`;
+    btn.appendChild(tooltip);
+  } else {
+    btn.removeAttribute("aria-disabled");
+    btn.addEventListener("click", () => toggleAprobada(materia.id));
+  }
+  return btn;
+}
 
-    function getMateriaPorId(id) {
-      for (const bloque of MALLA) {
-        const encontrada = bloque.materias.find((mat) => mat.id === id);
-        if (encontrada) return encontrada;
-      }
-      if (id === "SC") return ESPECIALES.find((esp) => esp.id === id) || null;
-      return null;
-    }
+function crearBotonEspecial(especial) {
+  const aprobadas = obtenerAprobadas();
+  const totalCredAprob = calcCreditosAprobados(aprobadas);
+  const bloqueada = totalCredAprob < especial.necesitaCreditos;
+  const btn = document.createElement("button");
+  btn.className = "especial-btn";
+  btn.setAttribute("data-id", especial.id);
+  const nombreSpan = document.createElement("span");
+  nombreSpan.textContent = especial.nombre;
+  btn.appendChild(nombreSpan);
+  if (especial.uc && especial.uc > 0) {
+    const ucSpan = document.createElement("span");
+    ucSpan.className = "especial-uc-label";
+    ucSpan.textContent = `${especial.uc} UC`;
+    btn.appendChild(ucSpan);
+  }
+  if (aprobadas.includes(especial.id)) {
+    btn.classList.add("aprobada");
+    btn.setAttribute("aria-pressed", "true");
+  } else {
+    btn.setAttribute("aria-pressed", "false");
+  }
+  if (bloqueada) {
+    btn.setAttribute("aria-disabled", "true");
+    btn.tabIndex = -1;
+    const tooltip = document.createElement("span");
+    tooltip.className = "tooltip";
+    tooltip.textContent = `Debes tener aprobados ${especial.necesitaCreditos} créditos.`;
+    btn.appendChild(tooltip);
+  } else {
+    btn.removeAttribute("aria-disabled");
+    btn.addEventListener("click", () => toggleAprobada(especial.id));
+  }
+  return btn;
+}
 
-    function requisitosNoAprobados(materia, aprobadas) {
-      if (!materia.deps) return [];
-      return (materia.deps || []).filter((reqId) => !aprobadas.includes(reqId));
-    }
+function renderMalla() {
+  // Vaciar contenido previo
+  document.getElementById('primer-ano-block').innerHTML = '';
+  document.getElementById('segundo-ano-block').innerHTML = '';
+  document.getElementById('tercer-ano-block').innerHTML = '';
+  document.getElementById('cuarto-ano-block').innerHTML = '';
+  document.getElementById('quinto-ano-block').innerHTML = '';
+  document.getElementById('especiales-block').innerHTML = '';
 
-    function calcCreditosAprobados(aprobadas) {
-      let total = 0;
-      for (const bloque of MALLA) {
-        for (const mat of bloque.materias) {
-          if (aprobadas.includes(mat.id) && mat.uc) total += mat.uc;
-        }
-      }
-      for (const esp of ESPECIALES) {
-        if (aprobadas.includes(esp.id) && esp.uc) total += esp.uc;
-      }
-      return total;
-    }
+  // Primer año
+  const primerCont = document.getElementById('primer-ano-block');
+  primerCont.insertAdjacentHTML('beforeend', `<div class="col-title">Primer año</div>`);
+  MALLA.find(b => b.year === 'Primer año').materias.forEach(m => {
+    primerCont.appendChild(crearBotonMateria(m));
+  });
 
-    function crearBotonMateria(materia) {
-      const aprobadas = obtenerAprobadas();
-      const reqsNoAprob = requisitosNoAprobados(materia, aprobadas);
-      const bloqueada = reqsNoAprob.length > 0;
-      const btn = document.createElement("button");
-      btn.className = "asignatura";
-      btn.setAttribute("data-id", materia.id);
-      btn.tabIndex = 0;
-      btn.innerHTML = `<span>${materia.nombre}</span><span class="uc-label">${materia.uc} UC</span>`;
-      if (aprobadas.includes(materia.id)) {
-        btn.classList.add("aprobada");
-        btn.setAttribute("aria-pressed", "true");
-      } else {
-        btn.setAttribute("aria-pressed", "false");
-      }
-      if (bloqueada) {
-        btn.setAttribute("aria-disabled", "true");
-        btn.tabIndex = -1;
-        const tooltip = document.createElement("span");
-        tooltip.className = "tooltip";
-        const textosFaltan = reqsNoAprob.map((id) => {
-          const mat = getMateriaPorId(id);
-          return mat ? mat.nombre : id;
-        });
-        tooltip.textContent = `Debes aprobar primero: ${textosFaltan.join(", ")}`;
-        btn.appendChild(tooltip);
-      } else {
-        btn.removeAttribute("aria-disabled");
-        btn.addEventListener("click", () => toggleAprobada(materia.id));
-      }
-      return btn;
-    }
+  // Segundo año
+  const segundoCont = document.getElementById('segundo-ano-block');
+  segundoCont.insertAdjacentHTML('beforeend', `<div class="col-title">Segundo año</div>`);
+  MALLA.find(b => b.year === 'Segundo año').materias.forEach(m => {
+    segundoCont.appendChild(crearBotonMateria(m));
+  });
 
-    function crearBotonEspecial(especial) {
-      const aprobadas = obtenerAprobadas();
-      const totalCredAprob = calcCreditosAprobados(aprobadas);
-      const bloqueada = totalCredAprob < especial.necesitaCreditos;
-      const btn = document.createElement("button");
-      btn.className = "especial-btn";
-      btn.setAttribute("data-id", especial.id);
-      const nombreSpan = document.createElement("span");
-      nombreSpan.textContent = especial.nombre;
-      btn.appendChild(nombreSpan);
-      if (especial.uc && especial.uc > 0) {
-        const ucSpan = document.createElement("span");
-        ucSpan.className = "especial-uc-label";
-        ucSpan.textContent = `${especial.uc} UC`;
-        btn.appendChild(ucSpan);
-      }
-      if (aprobadas.includes(especial.id)) {
-        btn.classList.add("aprobada");
-        btn.setAttribute("aria-pressed", "true");
-      } else {
-        btn.setAttribute("aria-pressed", "false");
-      }
-      if (bloqueada) {
-        btn.setAttribute("aria-disabled", "true");
-        btn.tabIndex = -1;
-        const tooltip = document.createElement("span");
-        tooltip.className = "tooltip";
-        tooltip.textContent = `Debes tener aprobados ${especial.necesitaCreditos} créditos.`;
-        btn.appendChild(tooltip);
-      } else {
-        btn.removeAttribute("aria-disabled");
-        btn.addEventListener("click", () => toggleAprobada(especial.id));
-      }
-      return btn;
-    }
+  // Tercer año
+  const tercerCont = document.getElementById('tercer-ano-block');
+  tercerCont.insertAdjacentHTML('beforeend', `<div class="col-title">Tercer año</div>`);
+  MALLA.find(b => b.year === 'Tercer año').materias.forEach(m => {
+    tercerCont.appendChild(crearBotonMateria(m));
+  });
 
-    function renderMalla() {
-      // Vaciar todo
-      document.getElementById("primer-ano-block").innerHTML = "";
-      document.getElementById("segundo-ano-block").innerHTML = "";
-      document.getElementById("tercer-ano-block").innerHTML = "";
-      document.getElementById("cuarto-ano-block").innerHTML = "";
-      document.getElementById("especiales-block").innerHTML = "";
+  // Cuarto año
+  const cuartoCont = document.getElementById('cuarto-ano-block');
+  cuartoCont.insertAdjacentHTML('beforeend', `<div class="col-title">Cuarto año</div>`);
+  MALLA.find(b => b.year === 'Cuarto año').materias.forEach(m => {
+    cuartoCont.appendChild(crearBotonMateria(m));
+  });
 
-      // Primer año
-      const primerCon = document.getElementById("primer-ano-block");
-      primerCon.insertAdjacentHTML("beforeend", `<div class="col-title">Primer año</div>`);
-      MALLA.find((b) => b.year === "Primer año").materias.forEach((m) => {
-        primerCon.appendChild(crearBotonMateria(m));
-      });
+  // Quinto año
+  const quintoCont = document.getElementById('quinto-ano-block');
+  quintoCont.insertAdjacentHTML('beforeend', `<div class="col-title">Quinto año</div>`);
+  MALLA.find(b => b.year === 'Quinto año').materias.forEach(m => {
+    quintoCont.appendChild(crearBotonMateria(m));
+  });
 
-      // Segundo año
-      const segundoCon = document.getElementById("segundo-ano-block");
-      segundoCon.insertAdjacentHTML("beforeend", `<div class="col-title">Segundo año</div>`);
-      MALLA.find((b) => b.year === "Segundo año").materias.forEach((m) => {
-        segundoCon.appendChild(crearBotonMateria(m));
-      });
+  // Casillas especiales
+  const especialesCont = document.getElementById('especiales-block');
+  ESPECIALES.forEach(e => {
+    especialesCont.appendChild(crearBotonEspecial(e));
+  });
+  const infoDiv = document.createElement('div');
+  infoDiv.className = 'info-col';
+  infoDiv.innerHTML = 
+    `<p>Para cursar <b>Seminario o Curso de Extensión</b>, deben haberse aprobado 72 créditos.</p>` +
+    `<p>Para realizar <b>Servicio Comunitario</b>, deben haberse aprobado 91 créditos.</p>`;
+  especialesCont.appendChild(infoDiv);
+}
 
-      // Tercer año
-      const tercerCon = document.getElementById("tercer-ano-block");
-      tercerCon.insertAdjacentHTML("beforeend", `<div class="col-title">Tercer año</div>`);
-      MALLA.find((b) => b.year === "Tercer año").materias.forEach((m) => {
-        tercerCon.appendChild(crearBotonMateria(m));
-      });
+function toggleAprobada(matId) {
+  let aprobadas = obtenerAprobadas();
+  if (aprobadas.includes(matId)) {
+    aprobadas = aprobadas.filter(id => id !== matId);
+  } else {
+    aprobadas.push(matId);
+  }
+  guardarAprobadas(aprobadas);
+  renderMalla();
+}
 
-      // Cuarto año
-      const cuartoCon = document.getElementById("cuarto-ano-block");
-      cuartoCon.insertAdjacentHTML("beforeend", `<div class="col-title">Cuarto año</div>`);
-      MALLA.find((b) => b.year === "Cuarto año").materias.forEach((m) => {
-        cuartoCon.appendChild(crearBotonMateria(m));
-      });
+window.addEventListener('DOMContentLoaded', renderMalla);
 
-      // Especiales
-      const especialesCon = document.getElementById("especiales-block");
-      ESPECIALES.forEach((e) => {
-        especialesCon.appendChild(crearBotonEspecial(e));
-      });
+document.getElementById('btn-regresa').addEventListener('click', () => {
+  window.location.href = 'https://sites.google.com/view/masestudiantilucv/inicio';
+});
 
-      // Info especiales
-      const infoDiv = document.createElement("div");
-      infoDiv.className = "info-col";
-      infoDiv.innerHTML =
-        `<p>Para cursar <b>Seminario o Curso de Extensión</b>, deben haberse aprobado 72 créditos.</p>` +
-        `<p>Para realizar <b>Servicio Comunitario</b>, deben haberse aprobado 91 créditos.</p>`;
-      especialesCon.appendChild(infoDiv);
-    }
-
-    function toggleAprobada(matId) {
-      let aprobadas = obtenerAprobadas();
-      if (aprobadas.includes(matId)) {
-        aprobadas = aprobadas.filter((id) => id !== matId);
-      } else {
-        aprobadas.push(matId);
-      }
-      guardarAprobadas(aprobadas);
+document.querySelector('h1').ondblclick = (e) => {
+  if(e.shiftKey){
+    if(confirm('¿Seguro que deseas borrar todo el progreso guardado?')){
+      localStorage.removeItem(STORAGE_KEY);
       renderMalla();
     }
-
-    window.addEventListener("DOMContentLoaded", renderMalla);
-
-    document.getElementById("btn-regresa").addEventListener("click", () => {
-      window.location.href = "https://sites.google.com/view/masestudiantilucv/inicio";
-    });
-
-    document.querySelector("h1").ondblclick = (e) => {
-      if (e.shiftKey) {
-        if (confirm("¿Seguro que deseas borrar todo el progreso guardado?")) {
-          localStorage.removeItem(STORAGE_KEY);
-          renderMalla();
-        }
-      }
-    };
-  </script>
+  }
+};
+</script>
 </body>
 </html>
