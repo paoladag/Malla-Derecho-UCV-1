@@ -44,7 +44,7 @@
       position: fixed;
       top: 12px;
       right: 12px;
-      max-width: 120px;
+      max-width: 360px; /* Tamaño triple */
       height: auto;
       z-index: 10000;
       user-select: none;
@@ -222,7 +222,7 @@
         position: static;
         margin: 10px auto 30px auto;
         display: block;
-        max-width: 100px;
+        max-width: 300px; /* responsive smaller */
       }
     }
     .footer {
@@ -451,10 +451,12 @@
           });
         }
       });
+
       const especialesBlock = document.getElementById('especiales-block');
       ESPECIALES.forEach(especial => {
         especialesBlock.appendChild(crearBotonEspecial(especial));
       });
+
       const infoDiv = document.createElement("div");
       infoDiv.className = "info-col";
       infoDiv.innerHTML =
