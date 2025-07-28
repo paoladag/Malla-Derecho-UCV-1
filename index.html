@@ -15,6 +15,30 @@
       min-height: 100vh;
       font-family: 'Montserrat', Arial, sans-serif;
       overflow-x: auto;
+      position: relative;
+    }
+    #btn-regresa {
+      position: fixed;
+      top: 12px;
+      left: 12px;
+      background: #ffffff;
+      color: #114087;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 16px;
+      font-family: 'Montserrat', Arial, sans-serif;
+      font-weight: 700;
+      font-size: 1em;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      z-index: 9999;
+      user-select: none;
+      transition: background-color 0.25s, color 0.25s;
+    }
+    #btn-regresa:hover, #btn-regresa:focus {
+      background: #114087;
+      color: #fff;
+      outline: none;
     }
     h1 {
       font-family: 'League Spartan', Arial, sans-serif;
@@ -196,6 +220,8 @@
   </style>
 </head>
 <body>
+  <button id="btn-regresa" type="button">Regresa a nuestra página</button>
+
   <h1 title="Haz Shift + doble clic para limpiar el progreso">
     Malla Curricular - Derecho<br>Universidad Central de Venezuela
   </h1>
@@ -414,6 +440,12 @@
       renderMalla();
     }
     window.addEventListener("DOMContentLoaded", renderMalla);
+
+    // Script para botón regresar
+    document.getElementById('btn-regresa').addEventListener('click', function() {
+      window.location.href = 'https://sites.google.com/view/masestudiantilucv/inicio';
+    });
+
     document.querySelector("h1").ondblclick = function(e) {
       if (e.shiftKey) {
         if (confirm("¿Seguro que deseas borrar todo el progreso guardado?")) {
