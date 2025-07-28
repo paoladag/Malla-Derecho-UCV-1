@@ -31,7 +31,7 @@
       font-size: 1em;
       cursor: pointer;
       box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-      z-index: 9999;
+      z-index: 10000;
       user-select: none;
       transition: background-color 0.25s, color 0.25s;
     }
@@ -39,6 +39,15 @@
       background: #114087;
       color: #fff;
       outline: none;
+    }
+    #logo-header {
+      position: fixed;
+      top: 12px;
+      right: 12px;
+      max-width: 120px;
+      height: auto;
+      z-index: 10000;
+      user-select: none;
     }
     h1 {
       font-family: 'League Spartan', Arial, sans-serif;
@@ -204,6 +213,17 @@
         width: 100% !important;
         max-width: none !important;
       }
+      #btn-regresa {
+        position: static;
+        margin: 10px auto 20px auto;
+        display: block;
+      }
+      #logo-header {
+        position: static;
+        margin: 10px auto 30px auto;
+        display: block;
+        max-width: 100px;
+      }
     }
     .footer {
       color: #fff;
@@ -221,6 +241,8 @@
 </head>
 <body>
   <button id="btn-regresa" type="button">Regresa a nuestra página</button>
+
+  <img id="logo-header" src="logo en blanco.png" alt="Logo Blanco UCV" />
 
   <h1 title="Haz Shift + doble clic para limpiar el progreso">
     Malla Curricular - Derecho<br>Universidad Central de Venezuela
@@ -248,12 +270,12 @@
   <script>
     const MALLA = [
       { year: "Primer año", materias: [
-        { id: "1101", nombre: "Derecho Civil I", uc: 6},
-        { id: "1201", nombre: "Derecho Constitucional", uc: 6},
-        { id: "1501", nombre: "Introducción al Derecho", uc: 6},
-        { id: "1502", nombre: "Derecho Romano I", uc: 6},
-        { id: "1601", nombre: "Economía Política", uc: 6},
-        { id: "1602", nombre: "Sociología Jurídica", uc: 6}
+        { id: "1101", nombre: "Derecho Civil I", uc: 6 },
+        { id: "1201", nombre: "Derecho Constitucional", uc: 6 },
+        { id: "1501", nombre: "Introducción al Derecho", uc: 6 },
+        { id: "1502", nombre: "Derecho Romano I", uc: 6 },
+        { id: "1601", nombre: "Economía Política", uc: 6 },
+        { id: "1602", nombre: "Sociología Jurídica", uc: 6 }
       ]},
       { year: "Segundo año", materias: [
         { id: "1102", nombre: "Derecho Civil II", uc: 6, deps: ["1101", "1501"] },
@@ -269,7 +291,7 @@
         { id: "1205", nombre: "Finanzas Públicas", uc: 6, deps: ["1202", "1601"] },
         { id: "1302", nombre: "Derecho Penal II", uc: 6, deps: ["1301"] },
         { id: "1504", nombre: "Filosofía del Derecho", uc: 6 },
-        { id: "1902", nombre: "Práctica Jurídica I", uc: 6, deps: ["1101", "1501"]}
+        { id: "1902", nombre: "Práctica Jurídica I", uc: 6, deps: ["1101", "1501"] }
       ]},
       { year: "Cuarto año", materias: [
         { id: "1104", nombre: "Derecho Civil IV", uc: 6, deps: ["1102"] },
@@ -277,7 +299,7 @@
         { id: "1107", nombre: "Derecho Mercantil I", uc: 6, deps: ["1103"] },
         { id: "1109", nombre: "Derecho del trabajo", uc: 6, deps: ["1103"] },
         { id: "1401", nombre: "Derecho Procesal Civil I", uc: 6, deps: ["1102"] },
-        { id: "1903", nombre: "Práctica Jurídica II", uc: 6, deps: ["1902"]}
+        { id: "1903", nombre: "Práctica Jurídica II", uc: 6, deps: ["1902"] }
       ]},
       { year: "Quinto año", materias: [
         { id: "1108", nombre: "Derecho Mercantil II", uc: 6, deps: ["1107"] },
@@ -285,14 +307,17 @@
         { id: "1207", nombre: "Derecho Administrativo III", uc: 6, deps: ["1203", "1401"] },
         { id: "1402", nombre: "Derecho Procesal Civil II", uc: 6, deps: ["1401"] },
         { id: "1403", nombre: "Derecho Procesal Penal", uc: 6, deps: ["1302", "1401"] },
-        { id: "1904", nombre: "Práctica Jurídica III", uc: 6, deps: ["1401", "1903"]}
+        { id: "1904", nombre: "Práctica Jurídica III", uc: 6, deps: ["1401", "1903"] }
       ]}
     ];
+
     const ESPECIALES = [
       { id: "1905", nombre: "Seminario / Curso de Extensión", uc: 2, necesitaCreditos: 72 },
       { id: "SC", nombre: "Servicio Comunitario", uc: 0, necesitaCreditos: 91 }
     ];
+
     const STORAGE_KEY = "der_ucv_aprobadas_v2";
+
     function obtenerAprobadas() {
       try {
         return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
@@ -300,9 +325,11 @@
         return [];
       }
     }
+
     function guardarAprobadas(aprobadas) {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(aprobadas));
     }
+
     function getMateriaPorId(id) {
       for (let bloque of MALLA) {
         let encontrada = bloque.materias.find(mat => mat.id === id);
@@ -311,10 +338,12 @@
       if (id === "SC") return ESPECIALES.find(esp => esp.id === id) || null;
       return null;
     }
+
     function requisitosNoAprobados(materia, aprobadas) {
       if (!materia.deps) return [];
       return (materia.deps || []).filter(reqId => !aprobadas.includes(reqId));
     }
+
     function calcCreditosAprobados(aprobadas) {
       let total = 0;
       for (let bloque of MALLA) {
@@ -327,6 +356,7 @@
       }
       return total;
     }
+
     function crearBotonMateria(materia) {
       const aprobadas = obtenerAprobadas();
       let reqsNoAprob = requisitosNoAprobados(materia, aprobadas);
@@ -359,6 +389,7 @@
       }
       return btn;
     }
+
     function crearBotonEspecial(especial) {
       const aprobadas = obtenerAprobadas();
       const totalCredAprob = calcCreditosAprobados(aprobadas);
@@ -394,6 +425,7 @@
       }
       return btn;
     }
+
     function renderMalla() {
       document.getElementById('primer-ano-block').innerHTML = '';
       document.getElementById('segundo-ano-block').innerHTML = '';
@@ -401,6 +433,7 @@
       document.getElementById('cuarto-ano-block').innerHTML = '';
       document.getElementById('quinto-ano-block').innerHTML = '';
       document.getElementById('especiales-block').innerHTML = '';
+
       MALLA.forEach(bloque => {
         let containerId = '';
         switch (bloque.year) {
@@ -429,6 +462,7 @@
         `<p>Para realizar <b>Servicio Comunitario</b>, deben haberse aprobado 91 créditos.</p>`;
       especialesBlock.appendChild(infoDiv);
     }
+
     function toggleAprobada(matId) {
       let aprobadas = obtenerAprobadas();
       if (aprobadas.includes(matId)) {
@@ -439,6 +473,7 @@
       guardarAprobadas(aprobadas);
       renderMalla();
     }
+
     window.addEventListener("DOMContentLoaded", renderMalla);
 
     // Script para botón regresar
