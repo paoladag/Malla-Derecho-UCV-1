@@ -72,36 +72,36 @@
     /* COLUMNAS */
     #col-1 {
       grid-column: 1;
-      grid-row: 1 / 3; /* ocupa dos filas */
+      grid-row: 1 / 3; /* Primer año arriba, Cuarto año abajo */
       display: flex;
       flex-direction: column;
       gap: 30px;
     }
     #col-2 {
       grid-column: 2;
-      grid-row: 1 / 3; /* dos filas */
+      grid-row: 1 / 3; /* Segundo año arriba, Quinto año abajo */
       display: flex;
       flex-direction: column;
       gap: 30px;
     }
     #col-3 {
       grid-column: 3;
-      grid-row: 1;
+      grid-row: 1; /* Tercer año */
       display: flex;
       flex-direction: column;
       gap: 30px;
     }
     #col-4 {
       grid-column: 3;
-      grid-row: 2;
+      grid-row: 2; /* Casillas especiales */
       display: flex;
       flex-direction: column;
       gap: 30px;
     }
     #col-5 {
-      display: none; /* no se usa en escritorio */
+      display: none; /* No se usa pero reservado */
     }
-    /* VERTICAL COLUMNS PARA BLOQUES INDIVIDUALES SIEMPRE */
+    /* COLUMNAS INDEPENDIENTES PARA MOVIL */
     .vertical-column {
       display: flex;
       flex-direction: column;
@@ -111,6 +111,7 @@
       min-width: 250px;
       max-width: 100%;
     }
+    /* BLOQUES */
     .column-block {
       background: #FFBD59;
       border-radius: 17px;
@@ -122,7 +123,7 @@
       flex-shrink: 0;
       min-height: 100px;
     }
-    /* Bloques inferiores crecen para alinear altura */
+    /* Bloques inferiores crecen para igualar altura */
     .lower-block {
       flex-grow: 1;
     }
@@ -232,7 +233,6 @@
       line-height: 1.4;
     }
     @media (max-width: 900px) {
-      /* En móvil apilamos columnas en orden natural deseado */
       .main-container {
         display: flex;
         flex-direction: column;
@@ -248,19 +248,17 @@
         flex-direction: column !important;
       }
       #col-5 {
-        display: flex !important;
+        display: none !important;
       }
-      /* Orden exacto que quieres en móvil */
-      #col-1 { order: 1; } /* Primer año + Cuarto año */
-      #col-2 { order: 2; } /* Segundo año + Quinto año */
-      #col-3 { order: 3; } /* Tercer año */
-      #col-4 { order: 4; } /* Casillas especiales */
-      #col-5 { order: 5; display: none; } /* podemos usar para extra, oculto */
-      /* En móvil, bloque inferiores no se estiran */
-      .lower-block {
-        flex-grow: 0;
-      }
-      .upper-block {
+      /* Orden de columnas en móvil, en este orden secuencial */
+      #col-1 { order: 1; }
+      #col-2 { order: 2; }
+      #col-3 { order: 3; }
+      #col-4 { order: 5; }   /* Casillas especiales al final */
+      /* Columna quinto año está en #col-2 abajo, la mostramos en orden natural */
+      /* Oculta columna 5 */
+      /* En móvil, bloque inferiores no crecen para evitar desalineación */
+      .lower-block, .upper-block {
         flex-grow: 0;
       }
       #btn-regresa {
@@ -295,44 +293,44 @@
   <img id="logo-header" src="logo en blanco.png" alt="Logo Blanco UCV" />
 
   <h1 title="Haz Shift + doble clic para limpiar el progreso">
-    Malla Curricular - Derecho<br />Universidad Central de Venezuela
+    Malla Curricular - Derecho<br>Universidad Central de Venezuela
   </h1>
 
   <div class="main-container" id="main-container">
-    <!-- Columna 1: Primer y Cuarto año -->
+    <!-- Columna 1: Primer año arriba, Cuarto año abajo -->
     <div class="vertical-column" id="col-1">
       <div class="column-block upper-block" id="primer-ano-block"></div>
       <div class="column-block lower-block" id="cuarto-ano-block"></div>
     </div>
-    <!-- Columna 2: Segundo y Quinto año -->
+
+    <!-- Columna 2: Segundo año arriba, Quinto año abajo -->
     <div class="vertical-column" id="col-2">
       <div class="column-block upper-block" id="segundo-ano-block"></div>
       <div class="column-block lower-block" id="quinto-ano-block"></div>
     </div>
+
     <!-- Columna 3: Tercer año -->
     <div class="vertical-column" id="col-3">
       <div class="column-block upper-block" id="tercer-ano-block"></div>
     </div>
+
     <!-- Columna 4: Casillas especiales -->
     <div class="vertical-column" id="col-4">
       <div class="column-block lower-block" id="especiales-block"></div>
     </div>
-    <!-- Columna 5: Extra (oculto) -->
-    <div class="vertical-column" id="col-5" style="display:none;"></div>
   </div>
 
   <div class="footer">Recuerda que: Unidos Somos Más</div>
 
   <script>
-    // Código JavaScript igual que antes
     const MALLA = [
       { year: "Primer año", materias: [
-        { id: "1101", nombre: "Derecho Civil I", uc: 6 },
-        { id: "1201", nombre: "Derecho Constitucional", uc: 6 },
-        { id: "1501", nombre: "Introducción al Derecho", uc: 6 },
-        { id: "1502", nombre: "Derecho Romano I", uc: 6 },
-        { id: "1601", nombre: "Economía Política", uc: 6 },
-        { id: "1602", nombre: "Sociología Jurídica", uc: 6 }
+        { id: "1101", nombre: "Derecho Civil I", uc: 6},
+        { id: "1201", nombre: "Derecho Constitucional", uc: 6},
+        { id: "1501", nombre: "Introducción al Derecho", uc: 6},
+        { id: "1502", nombre: "Derecho Romano I", uc: 6},
+        { id: "1601", nombre: "Economía Política", uc: 6},
+        { id: "1602", nombre: "Sociología Jurídica", uc: 6}
       ]},
       { year: "Segundo año", materias: [
         { id: "1102", nombre: "Derecho Civil II", uc: 6, deps: ["1101", "1501"] },
@@ -372,7 +370,6 @@
       { id: "SC", nombre: "Servicio Comunitario", uc: 0, necesitaCreditos: 91 }
     ];
     const STORAGE_KEY = "der_ucv_aprobadas_v2";
-
     function obtenerAprobadas() {
       try {
         return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
@@ -475,80 +472,56 @@
       return btn;
     }
     function renderMalla() {
-      // Limpiar bloques
-      document.getElementById("primer-ano-block").innerHTML = "";
-      document.getElementById("segundo-ano-block").innerHTML = "";
-      document.getElementById("tercer-ano-block").innerHTML = "";
-      document.getElementById("cuarto-ano-block").innerHTML = "";
-      document.getElementById("quinto-ano-block").innerHTML = "";
-      document.getElementById("especiales-block").innerHTML = "";
-
-      // Primer año
-      let c1 = document.getElementById("primer-ano-block");
-      c1.insertAdjacentHTML("beforeend", `<div class="col-title">Primer año</div>`);
-      MALLA.find((b) => b.year === "Primer año").materias.forEach((m) => {
-        c1.appendChild(crearBotonMateria(m));
-      });
-      // Segundo año
-      let c2 = document.getElementById("segundo-ano-block");
-      c2.insertAdjacentHTML("beforeend", `<div class="col-title">Segundo año</div>`);
-      MALLA.find((b) => b.year === "Segundo año").materias.forEach((m) => {
-        c2.appendChild(crearBotonMateria(m));
-      });
-      // Tercer año
-      let c3 = document.getElementById("tercer-ano-block");
-      c3.insertAdjacentHTML("beforeend", `<div class="col-title">Tercer año</div>`);
-      MALLA.find((b) => b.year === "Tercer año").materias.forEach((m) => {
-        c3.appendChild(crearBotonMateria(m));
-      });
-      // Cuarto año
-      let c4 = document.getElementById("cuarto-ano-block");
-      c4.insertAdjacentHTML("beforeend", `<div class="col-title">Cuarto año</div>`);
-      MALLA.find((b) => b.year === "Cuarto año").materias.forEach((m) => {
-        c4.appendChild(crearBotonMateria(m));
-      });
-      // Quinto año
-      let c5 = document.getElementById("quinto-ano-block");
-      c5.insertAdjacentHTML("beforeend", `<div class="col-title">Quinto año</div>`);
-      MALLA.find((b) => b.year === "Quinto año").materias.forEach((m) => {
-        c5.appendChild(crearBotonMateria(m));
+      // Limpiar contenido previo
+      ['primer-ano-block','segundo-ano-block','tercer-ano-block','cuarto-ano-block','quinto-ano-block','especiales-block'].forEach(
+        id => document.getElementById(id).innerHTML = ''
+      );
+      // Renderizar bloques
+      MALLA.forEach(bloque => {
+        const contMap = {
+          'Primer año': 'primer-ano-block',
+          'Segundo año': 'segundo-ano-block',
+          'Tercer año': 'tercer-ano-block',
+          'Cuarto año': 'cuarto-ano-block',
+          'Quinto año': 'quinto-ano-block'
+        };
+        const cont = document.getElementById(contMap[bloque.year]);
+        if (cont) {
+          cont.insertAdjacentHTML('beforeend', `<div class="col-title">${bloque.year}</div>`);
+          bloque.materias.forEach(materia => cont.appendChild(crearBotonMateria(materia)));
+        }
       });
       // Casillas especiales
-      let c6 = document.getElementById("especiales-block");
-      ESPECIALES.forEach((e) => {
-        c6.appendChild(crearBotonEspecial(e));
-      });
-      const infoDiv = document.createElement("div");
-      infoDiv.className = "info-col";
-      infoDiv.innerHTML =
-        `<p>Para cursar <b>Seminario o Curso de Extensión</b>, deben haberse aprobado 72 créditos.</p>` +
-        `<p>Para realizar <b>Servicio Comunitario</b>, deben haberse aprobado 91 créditos.</p>`;
-      c6.appendChild(infoDiv);
+      const contEsp = document.getElementById('especiales-block');
+      ESPECIALES.forEach(especial => contEsp.appendChild(crearBotonEspecial(especial)));
+      // Info casos especiales
+      const infoDiv = document.createElement('div');
+      infoDiv.className = 'info-col';
+      infoDiv.innerHTML = `
+        <p>Para cursar <b>Seminario o Curso de Extensión</b>, deben haberse aprobado 72 créditos.</p>
+        <p>Para realizar <b>Servicio Comunitario</b>, deben haberse aprobado 91 créditos.</p>`;
+      contEsp.appendChild(infoDiv);
     }
-
-    function toggleAprobada(matId) {
+    function toggleAprobada(id) {
       let aprobadas = obtenerAprobadas();
-      if (aprobadas.includes(matId)) {
-        aprobadas = aprobadas.filter((id) => id !== matId);
+      if (aprobadas.includes(id)) {
+        aprobadas = aprobadas.filter(i => i !== id);
       } else {
-        aprobadas.push(matId);
+        aprobadas.push(id);
       }
       guardarAprobadas(aprobadas);
       renderMalla();
     }
+    window.addEventListener('DOMContentLoaded', renderMalla);
 
-    window.addEventListener("DOMContentLoaded", renderMalla);
-
-    document.getElementById("btn-regresa").addEventListener("click", () => {
-      window.location.href = "https://sites.google.com/view/masestudiantilucv/inicio";
+    document.getElementById('btn-regresa').addEventListener('click', () => {
+      window.location.href = 'https://sites.google.com/view/masestudiantilucv/inicio';
     });
 
-    document.querySelector("h1").ondblclick = (e) => {
-      if (e.shiftKey) {
-        if (confirm("¿Seguro que deseas borrar todo el progreso guardado?")) {
-          localStorage.removeItem(STORAGE_KEY);
-          renderMalla();
-        }
+    document.querySelector('h1').ondblclick = e => {
+      if(e.shiftKey && confirm('¿Seguro que deseas borrar todo el progreso guardado?')){
+        localStorage.removeItem(STORAGE_KEY);
+        renderMalla();
       }
     };
   </script>
