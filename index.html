@@ -62,13 +62,14 @@
       color: #114087;
       max-width: 1280px;
       margin: 0 auto;
+      margin-bottom: 1em; /* espacio debajo del cuadro */
       padding: 20px 25px;
       font-size: 1em;
       line-height: 1.5;
       user-select: none;
       box-sizing: border-box;
       font-family: 'Montserrat', Arial, sans-serif;
-      border-radius: 8px 8px 0 0;
+      border-radius: 12px; /* bordes redondeados */
     }
     .info-box p {
       margin: 0 0 0.75em 0;
@@ -310,7 +311,7 @@
           { id: "1501", nombre: "Introducción al Derecho", uc: 6 },
           { id: "1502", nombre: "Derecho Romano I", uc: 6 },
           { id: "1601", nombre: "Economía Política", uc: 6 },
-          { id: "1602", nombre: "Sociología Jurídica", uc: 6 }
+          { id: "1602", nombre: "Sociología Jurídica", uc: 6 },
         ],
       },
       {
@@ -321,7 +322,7 @@
           { id: "1206", nombre: "Derecho Internacional Público", uc: 6, deps: ["1201"] },
           { id: "1301", nombre: "Derecho Penal I", uc: 6 },
           { id: "1303", nombre: "Criminología", uc: 6 },
-          { id: "1503", nombre: "Derecho Romano II", uc: 6, deps: ["1502"] }
+          { id: "1503", nombre: "Derecho Romano II", uc: 6, deps: ["1502"] },
         ],
       },
       {
@@ -332,7 +333,7 @@
           { id: "1205", nombre: "Finanzas Públicas", uc: 6, deps: ["1202", "1601"] },
           { id: "1302", nombre: "Derecho Penal II", uc: 6, deps: ["1301"] },
           { id: "1504", nombre: "Filosofía del Derecho", uc: 6 },
-          { id: "1902", nombre: "Práctica Jurídica I", uc: 6, deps: ["1101", "1501"] }
+          { id: "1902", nombre: "Práctica Jurídica I", uc: 6, deps: ["1101", "1501"] },
         ],
       },
       {
@@ -343,7 +344,7 @@
           { id: "1107", nombre: "Derecho Mercantil I", uc: 6, deps: ["1103"] },
           { id: "1109", nombre: "Derecho del Trabajo", uc: 6, deps: ["1103"] },
           { id: "1401", nombre: "Derecho Procesal Civil I", uc: 6, deps: ["1102"] },
-          { id: "1903", nombre: "Práctica Jurídica II", uc: 6, deps: ["1902"] }
+          { id: "1903", nombre: "Práctica Jurídica II", uc: 6, deps: ["1902"] },
         ],
       },
       {
@@ -354,7 +355,7 @@
           { id: "1207", nombre: "Derecho Administrativo III", uc: 6, deps: ["1203", "1401"] },
           { id: "1402", nombre: "Derecho Procesal Civil II", uc: 6, deps: ["1401"] },
           { id: "1403", nombre: "Derecho Procesal Penal", uc: 6, deps: ["1302", "1401"] },
-          { id: "1904", nombre: "Práctica Jurídica III", uc: 6, deps: ["1401", "1903"] }
+          { id: "1904", nombre: "Práctica Jurídica III", uc: 6, deps: ["1401", "1903"] },
         ],
       },
     ];
