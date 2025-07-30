@@ -10,7 +10,7 @@
   <style>
     body {
       margin: 0;
-      background: #114087;
+      background: #39619a;
       color: #222;
       min-height: 100vh;
       font-family: 'Montserrat', Arial, sans-serif;
@@ -22,7 +22,7 @@
       top: 12px;
       left: 12px;
       background: #ffffff;
-      color: #114087;
+      color: #39619a;
       border: none;
       border-radius: 8px;
       padding: 10px 16px;
@@ -36,11 +36,12 @@
       transition: background-color 0.25s, color 0.25s;
     }
     #btn-regresa:hover, #btn-regresa:focus {
-      background: #114087;
+      background: #39619a;
       color: #fff;
       outline: none;
     }
-    /* Se eliminó #logo-header del CSS y DOM */
+    /* Eliminado logo superior derecho */
+
     /* Imagen header como banner a lo ancho */
     #header-image {
       width: 100vw;
@@ -57,6 +58,22 @@
       right: 50%;
       transform: translateX(-50%);
     }
+
+    /* Línea amarilla fina entre header y columnas */
+    #yellow-separator {
+      height: 4px;
+      background-color: #FFBD59;
+      margin: 0;
+      padding: 0;
+      width: 100vw;
+      max-width: 100vw;
+      min-width: 100vw;
+      position: relative;
+      left: 50%;
+      right: 50%;
+      transform: translateX(-50%);
+    }
+
     .main-container {
       display: grid;
       grid-template-columns: repeat(3, minmax(250px, 1fr));
@@ -93,7 +110,7 @@
       text-align: center;
       font-size: 1.21em;
       margin-bottom: 15px;
-      color: #114087;
+      color: #39619a;
       text-transform: uppercase;
       letter-spacing: 1px;
       user-select: none;
@@ -105,7 +122,7 @@
       border-radius: 12px;
       background: #fff;
       margin-bottom: 14px;
-      color: #114087;
+      color: #39619a;
       font-family: inherit;
       font-weight: 500;
       text-align: left;
@@ -126,7 +143,7 @@
       opacity: 0.72;
     }
     button.asignatura.aprobada, button.especial-btn.aprobada {
-      background: #114087 !important;
+      background: #39619a !important;
       color: white;
       text-decoration: line-through;
       font-weight: 700;
@@ -134,7 +151,7 @@
     .uc-label, .especial-uc-label {
       font-size: 0.93em;
       padding-left: 7px;
-      color: #114087b8;
+      color: #39619ab8;
       font-weight: 400;
       opacity: 0.82;
       flex-shrink: 0;
@@ -169,7 +186,7 @@
     .info-col {
       background: #fff;
       border-radius: 12px;
-      color: #114087;
+      color: #39619a;
       font-family: 'Montserrat', Arial, sans-serif;
       font-weight: 500;
       font-size: 1em;
@@ -204,18 +221,22 @@
         margin: 10px auto 20px auto;
         display: block;
       }
-      /* #logo-header eliminado para móvil también */
       #header-image {
         width: 100vw;
         max-width: 100vw;
         min-width: 100vw;
         margin: 0;
       }
+      #yellow-separator {
+        width: 100vw;
+        min-width: 100vw;
+        max-width: 100vw;
+      }
     }
     .footer {
       text-align: center;
-      margin: 20px 0 20px 0; /* espacio entre pie y columnas reducido */
-      opacity: 1; /* opacidad aumentada para resaltar */
+      margin: 20px 0 20px 0;
+      opacity: 1;
       max-width: 680px;
       margin-left: auto;
       margin-right: auto;
@@ -225,19 +246,21 @@
     .footer img {
       display: block;
       margin: 0 auto;
-      max-width: 320px; /* Dos veces más grande que 160px */
+      max-width: 320px;
       width: 100%;
       height: auto;
-      opacity: 1; /* Logo más visible (sin transparencia) */
+      opacity: 1;
     }
   </style>
 </head>
 <body>
   <button id="btn-regresa" type="button">Regresa a nuestra página</button>
 
-  <!-- Logo superior derecho eliminado -->
-
+  <!-- Imagen header a lo ancho arriba -->
   <img id="header-image" src="header mas.png" alt="Header MAS" />
+
+  <!-- Línea fina amarilla entre header y columnas -->
+  <div id="yellow-separator"></div>
 
   <div class="main-container" id="main-container">
     <!-- Primer año -->
@@ -443,11 +466,10 @@
     }
 
     function renderMalla() {
-      // Vaciar todos los bloques antes de renderizar
       ['primer-ano-block','segundo-ano-block','tercer-ano-block','cuarto-ano-block','quinto-ano-block','especiales-block'].forEach(id => {
         document.getElementById(id).innerHTML = '';
       });
-      // Renderizar materias por año
+
       MALLA.forEach(bloque => {
         const mapId = {
           "Primer año": 'primer-ano-block',
@@ -459,19 +481,22 @@
         const cont = document.getElementById(mapId[bloque.year]);
         if (cont) {
           cont.insertAdjacentHTML('beforeend', `<div class="col-title">${bloque.year}</div>`);
-          bloque.materias.forEach(materia => { cont.appendChild(crearBotonMateria(materia)); });
+          bloque.materias.forEach(materia => {
+            cont.appendChild(crearBotonMateria(materia));
+          });
         }
       });
-      // Renderizar casillas especiales
+
       const c6 = document.getElementById('especiales-block');
-      ESPECIALES.forEach(e => { c6.appendChild(crearBotonEspecial(e)); });
-      // Información casillas especiales
+      ESPECIALES.forEach(e => {
+        c6.appendChild(crearBotonEspecial(e));
+      });
+
       const infoDiv = document.createElement('div');
       infoDiv.className = 'info-col';
       infoDiv.innerHTML = `
         <p>Para cursar <b>Seminario o Curso de Extensión</b>, deben haberse aprobado 72 créditos.</p>
-        <p>Para realizar <b>Servicio Comunitario</b>, deben haberse aprobado 91 créditos.</p>
-      `;
+        <p>Para realizar <b>Servicio Comunitario</b>, deben haberse aprobado 91 créditos.</p>`;
       c6.appendChild(infoDiv);
     }
 
