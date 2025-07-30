@@ -65,7 +65,6 @@
       right: 50%;
       transform: translateX(-50%);
     }
-    /* MAIN CONTAINER - use grid for flexible layout */
     .main-container {
       display: grid;
       grid-template-columns: repeat(3, minmax(250px, 1fr));
@@ -231,9 +230,7 @@
       }
     }
     .footer {
-      color: #fff;
       text-align: center;
-      font-size: 0.98em;
       margin: 80px 0 20px 0;
       opacity: 0.89;
       max-width: 680px;
@@ -241,6 +238,14 @@
       margin-right: auto;
       line-height: 1.35;
       user-select: none;
+    }
+    .footer img {
+      display: block;
+      margin: 0 auto;
+      max-width: 160px;
+      width: 100%;
+      height: auto;
+      opacity: 0.93;
     }
   </style>
 </head>
@@ -279,7 +284,9 @@
     </div>
   </div>
 
-  <div class="footer">Recuerda que: Unidos Somos Más</div>
+  <div class="footer">
+    <img src="logo en blanco.png" alt="Logo Blanco UCV">
+  </div>
 
   <script>
     const MALLA = [
@@ -456,53 +463,29 @@
     }
 
     function renderMalla() {
-      // Limpiar todos los bloques
+      // Vaciar todos los bloques antes de renderizar
       ['primer-ano-block','segundo-ano-block','tercer-ano-block','cuarto-ano-block','quinto-ano-block','especiales-block'].forEach(id => {
         document.getElementById(id).innerHTML = '';
       });
-
-      // Primer año
-      const c1 = document.getElementById('primer-ano-block');
-      c1.insertAdjacentHTML('beforeend', `<div class="col-title">Primer año</div>`);
-      MALLA.find(b => b.year === 'Primer año').materias.forEach(m => {
-        c1.appendChild(crearBotonMateria(m));
+      // Renderizar materias por año
+      MALLA.forEach(bloque => {
+        const mapId = {
+          "Primer año": 'primer-ano-block',
+          "Segundo año": 'segundo-ano-block',
+          "Tercer año": 'tercer-ano-block',
+          "Cuarto año": 'cuarto-ano-block',
+          "Quinto año": 'quinto-ano-block'
+        };
+        const cont = document.getElementById(mapId[bloque.year]);
+        if (cont) {
+          cont.insertAdjacentHTML('beforeend', `<div class="col-title">${bloque.year}</div>`);
+          bloque.materias.forEach(materia => { cont.appendChild(crearBotonMateria(materia)); });
+        }
       });
-
-      // Segundo año
-      const c2 = document.getElementById('segundo-ano-block');
-      c2.insertAdjacentHTML('beforeend', `<div class="col-title">Segundo año</div>`);
-      MALLA.find(b => b.year === 'Segundo año').materias.forEach(m => {
-        c2.appendChild(crearBotonMateria(m));
-      });
-
-      // Tercer año
-      const c3 = document.getElementById('tercer-ano-block');
-      c3.insertAdjacentHTML('beforeend', `<div class="col-title">Tercer año</div>`);
-      MALLA.find(b => b.year === 'Tercer año').materias.forEach(m => {
-        c3.appendChild(crearBotonMateria(m));
-      });
-
-      // Cuarto año
-      const c4 = document.getElementById('cuarto-ano-block');
-      c4.insertAdjacentHTML('beforeend', `<div class="col-title">Cuarto año</div>`);
-      MALLA.find(b => b.year === 'Cuarto año').materias.forEach(m => {
-        c4.appendChild(crearBotonMateria(m));
-      });
-
-      // Quinto año
-      const c5 = document.getElementById('quinto-ano-block');
-      c5.insertAdjacentHTML('beforeend', `<div class="col-title">Quinto año</div>`);
-      MALLA.find(b => b.year === 'Quinto año').materias.forEach(m => {
-        c5.appendChild(crearBotonMateria(m));
-      });
-
-      // Casillas especiales
+      // Renderizar casillas especiales
       const c6 = document.getElementById('especiales-block');
-      ESPECIALES.forEach(e => {
-        c6.appendChild(crearBotonEspecial(e));
-      });
-
-      // Info casillas especiales
+      ESPECIALES.forEach(e => { c6.appendChild(crearBotonEspecial(e)); });
+      // Información casillas especiales
       const infoDiv = document.createElement('div');
       infoDiv.className = 'info-col';
       infoDiv.innerHTML = `
