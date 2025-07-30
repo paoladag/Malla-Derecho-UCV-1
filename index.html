@@ -49,15 +49,14 @@
       z-index: 10000;
       user-select: none;
     }
-    h1 {
-      font-family: 'League Spartan', Arial, sans-serif;
-      text-align: center;
-      color: #fff;
-      font-size: 2.5em;
-      margin: 32px 0 20px 0;
-      letter-spacing: 2px;
+    /* NUEVO: Estilos para la imagen header */
+    #header-image {
+      display: block;
+      max-width: 320px;
+      width: 90%;
+      height: auto;
+      margin: 32px auto 20px auto;
       user-select: none;
-      line-height: 1.2;
     }
     /* MAIN CONTAINER - use grid for flexible layout */
     .main-container {
@@ -223,6 +222,11 @@
         right: 12px;
         max-width: 120px;
       }
+      /* Ajustar tamaño de la imagen header para móvil */
+      #header-image {
+        max-width: 250px;
+        margin: 20px auto 15px auto;
+      }
     }
     .footer {
       color: #fff;
@@ -243,9 +247,8 @@
 
   <img id="logo-header" src="logo en blanco.png" alt="Logo Blanco UCV" />
 
-  <h1 title="Haz Shift + doble clic para limpiar el progreso">
-    Malla Curricular - Derecho<br />Universidad Central de Venezuela
-  </h1>
+  <!-- Imagen header en lugar del titulo -->
+  <img id="header-image" src="header mas.png" alt="Header MAS" />
 
   <div class="main-container" id="main-container">
     <!-- Primer año -->
@@ -524,12 +527,15 @@
       window.location.href = 'https://sites.google.com/view/masestudiantilucv/inicio';
     });
 
-    document.querySelector('h1').ondblclick = e => {
-      if(e.shiftKey && confirm('¿Seguro que deseas borrar todo el progreso guardado?')){
-        localStorage.removeItem(STORAGE_KEY);
-        renderMalla();
+    document.querySelector('body').addEventListener('dblclick', (e) => {
+      // Doble clic con Shift borra progreso, para accesibilidad mencionada
+      if (e.shiftKey) {
+        if (confirm('¿Seguro que deseas borrar todo el progreso guardado?')) {
+          localStorage.removeItem(STORAGE_KEY);
+          renderMalla();
+        }
       }
-    };
+    });
   </script>
 </body>
 </html>
