@@ -10,7 +10,7 @@
   <style>
     body {
       margin: 0;
-      background: #39619a;
+      background: #114087;
       color: #222;
       min-height: 100vh;
       font-family: 'Montserrat', Arial, sans-serif;
@@ -22,7 +22,7 @@
       top: 12px;
       left: 12px;
       background: #ffffff;
-      color: #39619a;
+      color: #114087;
       border: none;
       border-radius: 8px;
       padding: 10px 16px;
@@ -36,7 +36,7 @@
       transition: background-color 0.25s, color 0.25s;
     }
     #btn-regresa:hover, #btn-regresa:focus {
-      background: #39619a;
+      background: #114087;
       color: #fff;
       outline: none;
     }
@@ -59,7 +59,7 @@
       transform: translateX(-50%);
     }
 
-    /* Línea amarilla fina entre header y columnas */
+    /* Línea amarilla fina entre header y columnas - cubriendo todo el ancho sin margen */
     #yellow-separator {
       height: 4px;
       background-color: #FFBD59;
@@ -102,15 +102,19 @@
       flex-shrink: 0;
       min-height: 100px;
     }
-    .upper-block { flex-grow: 0; }
-    .lower-block { flex-grow: 1; }
+    .upper-block {
+      flex-grow: 0;
+    }
+    .lower-block {
+      flex-grow: 1;
+    }
     .col-title {
       font-family: 'Montserrat', Arial, sans-serif;
       font-weight: 700;
       text-align: center;
       font-size: 1.21em;
       margin-bottom: 15px;
-      color: #39619a;
+      color: #114087;
       text-transform: uppercase;
       letter-spacing: 1px;
       user-select: none;
@@ -122,7 +126,7 @@
       border-radius: 12px;
       background: #fff;
       margin-bottom: 14px;
-      color: #39619a;
+      color: #114087;
       font-family: inherit;
       font-weight: 500;
       text-align: left;
@@ -143,7 +147,7 @@
       opacity: 0.72;
     }
     button.asignatura.aprobada, button.especial-btn.aprobada {
-      background: #39619a !important;
+      background: #114087 !important;
       color: white;
       text-decoration: line-through;
       font-weight: 700;
@@ -151,7 +155,7 @@
     .uc-label, .especial-uc-label {
       font-size: 0.93em;
       padding-left: 7px;
-      color: #39619ab8;
+      color: #114087b8;
       font-weight: 400;
       opacity: 0.82;
       flex-shrink: 0;
@@ -186,7 +190,7 @@
     .info-col {
       background: #fff;
       border-radius: 12px;
-      color: #39619a;
+      color: #114087;
       font-family: 'Montserrat', Arial, sans-serif;
       font-weight: 500;
       font-size: 1em;
@@ -259,7 +263,7 @@
   <!-- Imagen header a lo ancho arriba -->
   <img id="header-image" src="header mas.png" alt="Header MAS" />
 
-  <!-- Línea fina amarilla entre header y columnas -->
+  <!-- Línea fina amarilla entre header y columnas, cubriendo todo el ancho sin espacio a los lados -->
   <div id="yellow-separator"></div>
 
   <div class="main-container" id="main-container">
@@ -351,10 +355,12 @@
         ],
       },
     ];
+
     const ESPECIALES = [
       { id: "1905", nombre: "Seminario / Curso de Extensión", uc: 2, necesitaCreditos: 72 },
       { id: "SC", nombre: "Servicio Comunitario", uc: 0, necesitaCreditos: 91 },
     ];
+
     const STORAGE_KEY = "der_ucv_aprobadas_v2";
 
     function obtenerAprobadas() {
